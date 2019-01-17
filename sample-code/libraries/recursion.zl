@@ -1,20 +1,21 @@
 factorial n =
-  n > 1: n * (factorial (n - 1)) \ 1
+  n > 1: n * (factorial (n - 1)) |
+  1
 
 => Lexical Analysis =>
 
-["factorial", "n", "=", "n", ">", "1", ":", "n", "*", "(", "factorial", "(", "n", "-", "1", ")", ")", "/", "1"]
+["factorial", "n", "=", "n", ">", "1", ":", "n", "*", "(", "factorial", "(", "n", "-", "1", ")", ")", "|", "1"]
 
 =>
 
 [
   { type: name, value: factorial },
   { type: name, value: n },
-  { type: assignment, value: = },
-  { type: op, value: > },
+  { type: =, value: },
+  { type: operator, value: > },
   { type: number, value: 1 },
-  { type: colon, value: : },
-  { type: op, value: * },
+  { type: :, value: },
+  { type: operator, value: * },
   { type: parenthesis, value: ( },
   { type: parenthesis, value: ) },
 ]

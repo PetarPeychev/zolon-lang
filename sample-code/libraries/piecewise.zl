@@ -1,6 +1,6 @@
 import increment
 
 conditional_increment x =
-  x > 5: x | increment_twice | increment_five_times /
-  x < 5: increment_twice x /
+  x > 5: x |> increment_twice |> increment_five_times |
+  x < 5: increment_twice x |
   x
