@@ -3,6 +3,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <regex>
 
 using std::string;
 using std::cin;
@@ -25,6 +26,7 @@ typedef struct Lexeme {
 vector<Lexeme> tokenize(string source) {
 
   int current = 0;
+  int max_length = source.length();
 
   vector <Lexeme> lexemes;
 
@@ -35,11 +37,55 @@ vector<Lexeme> tokenize(string source) {
     }
   }
 
+  // TODO: Remove in production
+  cout << source << endl;
+
   // Read lexemes and push them onto the vector
   while (current < int(source.length())) {
 
-    // TODO: Store current character and check for lexemes
+    char c = source[current];
 
+    // TODO: Change from switch-case to if-else with regex matching
+    switch (c) {
+
+      // Check for PARENTHESIS LexemeType
+      case '(':
+      case ')': {
+        Lexeme paren = { PARENTHESIS, string(1, c) };
+        lexemes.push_back(paren);
+        current++;
+        continue;
+      }
+
+      // Check for single-length OPERATOR LexemeType
+      case '+':
+      case '-':
+      case '*':
+      case '/': {
+        Lexeme op = { OPERATOR, string(1, c) };
+        lexemes.push_back(op);
+        current++;
+        continue;
+      }
+
+      // Check for multi-length OPERATOR LexemeType
+      case '>':
+      case '<': {
+        string op = string(1, c);
+        if (++current < max_length) {
+
+          c = source[current];
+
+          if (c == '=') {
+            op = op + string(1, c);
+            current++;
+          }
+
+          Lexeme l = { OPERATOR, op };
+          continue;
+        }
+      }
+    }
   }
 
   return lexemes;
@@ -65,6 +111,7 @@ int main(int argc, char* argv[]) {
   while(input >> sstr.rdbuf());
   string sourceCode = sstr.str();
 
+  // TODO: Remove in production
   cout << sourceCode;
 
   tokenize(sourceCode);
