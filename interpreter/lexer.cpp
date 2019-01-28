@@ -1,6 +1,9 @@
 #include <iostream>
 #include <regex>
+#include <unordered_set>
 #include "lexer.h"
+
+std::unordered_set<std::string> RESERVED_WORDS = {"is", "and", "or", "not", "import"};
 
 // Replace all newlines and tabs with spaces
 std::string flatten(std::string source) {
@@ -94,6 +97,36 @@ std::vector<Lexeme> tokenize(std::string source) {
       lexemes.push_back(single_operator);
       current++;
       std::cout << "Single operator: " << c << std::endl; // Remove in production
+      continue;
+    }
+
+    std::regex letter("[a-zA-Z]");
+    if (regex_match(c, letter)) {
+      std::string word;
+
+      std::regex w("\\w");
+      while (current < int(max_length)) {
+        c = std::string(1, source[current]);
+        if (regex_match(c, w)) {
+          word += c;
+          current++;
+        }
+        else {
+          if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
+            Lexeme keyword = { KEYWORD, word };
+            lexemes.push_back(keyword);
+            std::cout << "Keyword: " << word << std::endl; // Remove in production
+            break;
+          }
+
+          Lexeme name = { NAME, word };
+          lexemes.push_back(name);
+          std::cout << "Name: " << word << std::endl; // Remove in production
+          break;
+        }
+      }
+
+      current++;
       continue;
     }
 
