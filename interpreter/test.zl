@@ -1,3 +1,9 @@
-factorial n =
-  n >= 1: n * (factorial (n - 1)) |
-  1
+import increment
+
+conditional_increment x =
+  x > 5:
+    x
+    |> increment_twice
+    |> increment_five_times |
+  x < 5: increment_twice x |
+  x

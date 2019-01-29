@@ -3,7 +3,7 @@
 #include <unordered_set>
 #include "lexer.h"
 
-std::unordered_set<std::string> RESERVED_WORDS = {"is", "and", "or", "not", "import"};
+const std::unordered_set<std::string> RESERVED_WORDS = {"is", "and", "or", "not", "import"};
 
 // Replace all newlines and tabs with spaces
 std::string flatten(std::string source) {
@@ -29,12 +29,18 @@ std::vector<Lexeme> tokenize(std::string source) {
 
     std::string c(1, source[current]);
 
+    std::regex whitespace(" ");
+    if (regex_match(c, whitespace)) {
+      current++;
+      continue;
+    }
+
     std::regex paren("[()]");
     if (regex_match(c, paren)) {
       Lexeme parenthesis = { PARENTHESIS, c };
       lexemes.push_back(parenthesis);
       current++;
-      std::cout << "Paren: " << c << std::endl; // Remove in production
+      std::cout << "PARENTHESIS: " << c << std::endl; // Remove in production
       continue;
     }
 
@@ -43,7 +49,7 @@ std::vector<Lexeme> tokenize(std::string source) {
       Lexeme single_symbol = { SYMBOL, c};
       lexemes.push_back(single_symbol);
       current++;
-      std::cout << "Single symbol: " << c << std::endl; // Remove in production
+      std::cout << "SYMBOL: " << c << std::endl; // Remove in production
       continue;
     }
 
@@ -57,7 +63,7 @@ std::vector<Lexeme> tokenize(std::string source) {
           Lexeme double_symbol = { SYMBOL, c_new };
           lexemes.push_back(double_symbol);
           current += 2;
-          std::cout << "Double symbol: " << c_new << std::endl; // Remove in production
+          std::cout << "SYMBOL: " << c_new << std::endl; // Remove in production
           continue;
         }
       }
@@ -65,7 +71,7 @@ std::vector<Lexeme> tokenize(std::string source) {
       Lexeme single_symbol = { SYMBOL, c };
       lexemes.push_back(single_symbol);
       current++;
-      std::cout << "Single symbol: " << c << std::endl; // Remove in production
+      std::cout << "SYMBOL: " << c << std::endl; // Remove in production
       continue;
     }
 
@@ -74,7 +80,7 @@ std::vector<Lexeme> tokenize(std::string source) {
       Lexeme single_operator = { OPERATOR, c};
       lexemes.push_back(single_operator);
       current++;
-      std::cout << "Single operator: " << c << std::endl; // Remove in production
+      std::cout << "OPERATOR: " << c << std::endl; // Remove in production
       continue;
     }
 
@@ -88,7 +94,7 @@ std::vector<Lexeme> tokenize(std::string source) {
           Lexeme double_operator = { OPERATOR, c_new };
           lexemes.push_back(double_operator);
           current += 2;
-          std::cout << "Double operator: " << c_new << std::endl; // Remove in production
+          std::cout << "OPERATOR: " << c_new << std::endl; // Remove in production
           continue;
         }
       }
@@ -96,7 +102,7 @@ std::vector<Lexeme> tokenize(std::string source) {
       Lexeme single_operator = { OPERATOR, c };
       lexemes.push_back(single_operator);
       current++;
-      std::cout << "Single operator: " << c << std::endl; // Remove in production
+      std::cout << "OPERATOR: " << c << std::endl; // Remove in production
       continue;
     }
 
@@ -112,16 +118,17 @@ std::vector<Lexeme> tokenize(std::string source) {
           current++;
         }
         else {
+          current--;
           if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
             Lexeme keyword = { KEYWORD, word };
             lexemes.push_back(keyword);
-            std::cout << "Keyword: " << word << std::endl; // Remove in production
+            std::cout << "KEYWORD: " << word << std::endl; // Remove in production
             break;
           }
 
           Lexeme name = { NAME, word };
           lexemes.push_back(name);
-          std::cout << "Name: " << word << std::endl; // Remove in production
+          std::cout << "NAME: " << word << std::endl; // Remove in production
           break;
         }
       }
@@ -130,8 +137,29 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
-    current++; // Remove in production
-    continue; // Remove in production
+    std::regex digit("[0-9]");
+    if (regex_match(c, digit)) {
+      std::string digits;
+
+      std::regex num("[0-9.]+");
+      while (current < int(max_length)) {
+        c = std::string(1, source[current]);
+        if (regex_match(c, num)) {
+          digits += c;
+          current++;
+          continue;
+        }
+        Lexeme number = { NUMBER, digits };
+        lexemes.push_back(number);
+        std::cout << "NUMBER: " << digits << std::endl; // Remove in production
+        break;
+      }
+      continue;
+    }
+
+    std::cout << "Lexeme not recognised: " << c << std::endl;
+    current++;
+    continue;
 
   }
 
