@@ -6,4 +6,4 @@ conditional_increment x =
     |> increment_twice
     |> increment_five_times |
   x < 5: increment_twice x |
-  x
+  x ,

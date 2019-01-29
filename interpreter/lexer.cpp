@@ -25,16 +25,19 @@ std::vector<Lexeme> tokenize(std::string source) {
 
   std::cout << "Flat Code:\n" << source << std::endl; // Remove in production
 
-  while (current < int(max_length)) {
+  while (current < max_length) {
 
     std::string c(1, source[current]);
 
+    // Match whitespace and discard it.
+    // Not added to vector, but required for separating other lexemes
     std::regex whitespace(" ");
     if (regex_match(c, whitespace)) {
       current++;
       continue;
     }
 
+    // Match parentheses
     std::regex paren("[()]");
     if (regex_match(c, paren)) {
       Lexeme parenthesis = { PARENTHESIS, c };
@@ -44,6 +47,7 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    // Match symbols which are always single-length
     std::regex single_symbol("[:]");
     if (regex_match(c, single_symbol)) {
       Lexeme single_symbol = { SYMBOL, c};
@@ -53,9 +57,10 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    // Match symbols which could be double-length
     std::regex potential_double_s("\\|");
     if (regex_match(c, potential_double_s)) {
-      if (current + 1 < int(max_length)) {
+      if (current + 1 < max_length) {
         std::string c_new = c + source[current + 1];
 
         std::regex double_s("\\|>");
@@ -75,6 +80,7 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    // Match operators which are always single-length
     std::regex single_op("[+\\-\\*/=]");
     if (regex_match(c, single_op)) {
       Lexeme single_operator = { OPERATOR, c};
@@ -84,9 +90,10 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    // Match operators which could be double-length
     std::regex potential_double_op("[><]");
     if (regex_match(c, potential_double_op)) {
-      if (current + 1 < int(max_length)) {
+      if (current + 1 < max_length) {
         std::string c_new = c + source[current + 1];
 
         std::regex double_op("(<=)|(>=)");
@@ -106,12 +113,13 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    // Match names with a length of 1+
     std::regex letter("[a-zA-Z]");
     if (regex_match(c, letter)) {
       std::string word;
 
       std::regex w("\\w");
-      while (current < int(max_length)) {
+      while (current < max_length) {
         c = std::string(1, source[current]);
         if (regex_match(c, w)) {
           word += c;
@@ -119,6 +127,8 @@ std::vector<Lexeme> tokenize(std::string source) {
         }
         else {
           current--;
+
+          // Check if name is a reserved word
           if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
             Lexeme keyword = { KEYWORD, word };
             lexemes.push_back(keyword);
@@ -137,12 +147,15 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+
+    // Match numbers, which start with a digit and are followed by
+    // 0+ digits or decimal points. Does not validate numbers
     std::regex digit("[0-9]");
     if (regex_match(c, digit)) {
       std::string digits;
 
       std::regex num("[0-9.]+");
-      while (current < int(max_length)) {
+      while (current < max_length) {
         c = std::string(1, source[current]);
         if (regex_match(c, num)) {
           digits += c;
@@ -157,13 +170,14 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    // Match strings, starting and ending with a double quote
     std::regex quote("\"");
-    if (regex_match(c, quote) && (current + 1) < int(max_length)) {
+    if (regex_match(c, quote) && (current + 1) < max_length) {
       current++;
       c = std::string(1, source[current]);
       std::string chars;
 
-      while (current < int(max_length)) {
+      while (current < max_length) {
         c = std::string(1, source[current]);
         if (regex_match(c, quote) == false) {
           chars += c;
@@ -179,11 +193,9 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
-    std::cout << "Lexeme not recognised: " << c << std::endl;
-    current++;
-    continue;
-
+    // If no match, return an unrecognized lexeme error
+    throw std::invalid_argument(
+      "\nLexical Analysis Error:\nLexeme \"" + c + "\" not recognized.");
   }
-
   return lexemes;
 }
