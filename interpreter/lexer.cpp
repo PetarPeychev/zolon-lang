@@ -157,6 +157,28 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
+    std::regex quote("\"");
+    if (regex_match(c, quote) && (current + 1) < int(max_length)) {
+      current++;
+      c = std::string(1, source[current]);
+      std::string chars;
+
+      while (current < int(max_length)) {
+        c = std::string(1, source[current]);
+        if (regex_match(c, quote) == false) {
+          chars += c;
+          current++;
+          continue;
+        }
+        Lexeme str = { STRING, chars };
+        lexemes.push_back(str);
+        std::cout << "STRING: " << chars << std::endl; // Remove in production
+        current++;
+        break;
+      }
+      continue;
+    }
+
     std::cout << "Lexeme not recognised: " << c << std::endl;
     current++;
     continue;

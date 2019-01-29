@@ -2,7 +2,7 @@ import increment
 
 conditional_increment x =
   x > 5:
-    x
+    x + "This is a String"
     |> increment_twice
     |> increment_five_times |
   x < 5: increment_twice x |
