@@ -47,12 +47,12 @@ std::vector<Lexeme> tokenize(std::string source) {
       continue;
     }
 
-    std::regex potential_double_s("[|]");
+    std::regex potential_double_s("\\|");
     if (regex_match(c, potential_double_s)) {
       if (current + 1 < int(max_length)) {
         std::string c_new = c + source[current + 1];
 
-        std::regex double_s("|>");
+        std::regex double_s("\\|>");
         if (regex_match(c_new, double_s)) {
           Lexeme double_symbol = { SYMBOL, c_new };
           lexemes.push_back(double_symbol);
