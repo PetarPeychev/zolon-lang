@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include "lexer.h"
+#include "preprocessor.h"
 
 int main(int argc, char* argv[]) {
 
@@ -28,10 +29,11 @@ int main(int argc, char* argv[]) {
 
   std::cout << "Original Code:\n" << sourceCode << std::endl; // Remove in production
 
+  // Perform Lexical Analysis on the source code and produce a vector of lexemes
   std::vector<Lexeme> tokenVector = tokenize(sourceCode);
 
-  std::string x;
-  std::getline(std::cin, x);
+  // Run the preprocessor on the lexeme vector
+  tokenVector = preprocess(tokenVector);
 
   return 0;
 }
