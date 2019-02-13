@@ -1,5 +1,3 @@
-import increment
-
 conditional_increment x =
   x > 5:
     x + "This is a String"

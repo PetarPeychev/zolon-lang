@@ -7,9 +7,9 @@ const std::unordered_set<std::string> RESERVED_WORDS = {"is", "and", "or", "not"
 
 // Replace all newlines and tabs with spaces
 std::string flatten(std::string source) {
-  for (int i = 0; i < int(source.length()); i++) {
-    if (source[i] == '\n' || source[i] == '\t') {
-      source[i] = ' ';
+  for (char &i : source) {
+    if (i == '\n' || i == '\t') {
+      i = ' ';
     }
   }
   return source;
@@ -21,7 +21,7 @@ std::vector<Lexeme> tokenize(std::string source) {
   std::vector <Lexeme> lexemes;
   source = flatten(source);
   int current = 0;
-  int max_length = source.length();
+  auto max_length = static_cast<int>(source.length());
 
   std::cout << "Flat Code:\n" << source << std::endl; // Remove in production
 
@@ -179,7 +179,7 @@ std::vector<Lexeme> tokenize(std::string source) {
 
       while (current < max_length) {
         c = std::string(1, source[current]);
-        if (regex_match(c, quote) == false) {
+        if (!regex_match(c, quote)) {
           chars += c;
           current++;
           continue;
