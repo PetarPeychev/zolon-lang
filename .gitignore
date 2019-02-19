@@ -1,3 +1,6 @@
 *.o
 *.gch
 zolon
+.idea
+cmake-build-debug
+CMakeLists.txt
