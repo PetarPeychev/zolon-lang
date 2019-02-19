@@ -1,6 +1,6 @@
-conditional_increment x =
+conditional_increment = x ->
   x > 5:
-    x + "This is a String"
+    x
     |> increment_twice
     |> increment_five_times |
   x < 5: increment_twice x |
