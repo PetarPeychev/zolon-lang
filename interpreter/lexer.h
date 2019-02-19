@@ -6,13 +6,13 @@
 
 // Emum representing every lexeme type
 enum LexemeType {
-  PARENTHESIS, OPERATOR, SYMBOL, NUMBER, STRING, KEYWORD, NAME
+    PARENTHESIS, OPERATOR, SYMBOL, NUMBER, STRING, KEYWORD, NAME
 };
 
 // Struct defining a single lexeme
 typedef struct Lexeme {
-  LexemeType type;
-  std::string value;
+    LexemeType type;
+    std::string value;
 } Lexeme;
 
 std::vector<Lexeme> tokenize(std::string source);

@@ -5,20 +5,20 @@
 
 std::vector<Lexeme> preprocess(std::vector<Lexeme> tokens) {
 
-  // Find import statements
-  for (auto &token : tokens) {
-    if (token.value == "import") {
-        if (token.type == NAME) {
+    // Find import statements
+    for (auto &token : tokens) {
+        if (token.value == "import") {
+            if (token.type == NAME) {
 
-          // TODO: Implement import statements
+                // TODO: Implement import statements
 
+            }
         }
+
+        std::cout << token.value << " "; // Remove in production
     }
 
-    std::cout << token.value << " "; // Remove in production
-  }
+    std::cout << std::endl; // Remove in production
 
-  std::cout << std::endl; // Remove in production
-
-  return tokens;
+    return tokens;
 }
