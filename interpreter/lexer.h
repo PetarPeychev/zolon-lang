@@ -6,7 +6,22 @@
 
 // Emum representing every lexeme type
 enum LexemeType {
-    PARENTHESIS, OPERATOR, SYMBOL, NUMBER, STRING, KEYWORD, NAME
+    L_PARENTHESIS,
+    R_PARENTHESIS,
+    L_BRACKET,
+    R_BRACKET,
+    ASSIGNMENT_OPERATOR,
+    PIPE_OPERATOR,
+    ARITHMETIC_OPERATOR,
+    COMPARISON_OPERATOR,
+    BOOLEAN_OPERATOR,
+    PREFIX_OPERATOR,
+    COLON,
+    BAR,
+    MAPPING_OPERATOR,
+    NUMBER_LITERAL,
+    BOOLEAN_LITERAL,
+    IDENTIFIER
 };
 
 // Struct defining a single lexeme
