@@ -8,7 +8,7 @@ std::vector<Lexeme> preprocess(std::vector<Lexeme> tokens) {
     // Find import statements
     for (auto &token : tokens) {
         if (token.value == "import") {
-            if (token.type == NAME) {
+            if (token.type == IDENTIFIER) {
 
                 // TODO: Implement import statements
 

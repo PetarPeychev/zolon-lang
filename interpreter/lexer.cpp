@@ -3,7 +3,10 @@
 #include <unordered_set>
 #include "lexer.h"
 
-const std::unordered_set<std::string> RESERVED_WORDS = {"is", "and", "or", "not", "import"};
+// Reserved identifiers
+const std::unordered_set<std::string> BOOLEAN_OPERATORS = {"and", "or"};
+const std::unordered_set<std::string> BOOLEAN_LITERALS = {"true", "false"};
+const std::unordered_set<std::string> PREFIX_OPERATORS = {"not"};
 
 // Replace all newlines and tabs with spaces
 std::string flatten(std::string source) {
@@ -38,107 +41,261 @@ std::vector<Lexeme> tokenize(std::string source) {
         }
 
         // Match parentheses
-        std::regex paren("[()]");
-        if (regex_match(c, paren)) {
-            Lexeme parenthesis = { PARENTHESIS, c };
-            lexemes.push_back(parenthesis);
+        std::regex leftParenthesis("\\(");
+        if (regex_match(c, leftParenthesis)) {
+            Lexeme lex = { L_PARENTHESIS, c };
+            lexemes.push_back(lex);
             current++;
-            std::cout << "PARENTHESIS: " << c << std::endl; // Remove in production
+            std::cout << "L_PARENTHESIS: " << c << std::endl; // Remove in production
             continue;
         }
 
-        // Match symbols which are always single-length
-        std::regex single_symbol("[:]");
-        if (regex_match(c, single_symbol)) {
-            Lexeme single_symbol = { SYMBOL, c};
-            lexemes.push_back(single_symbol);
+        std::regex rightParenthesis("\\)");
+        if (regex_match(c, rightParenthesis)) {
+            Lexeme lex = { R_PARENTHESIS, c };
+            lexemes.push_back(lex);
             current++;
-            std::cout << "SYMBOL: " << c << std::endl; // Remove in production
+            std::cout << "R_PARENTHESIS: " << c << std::endl; // Remove in production
             continue;
         }
 
-        // Match symbols which could be double-length
-        std::regex potential_double_s("\\|");
-        if (regex_match(c, potential_double_s)) {
+        // Match brackets
+        std::regex leftBracket("\\[");
+        if (regex_match(c, leftBracket)) {
+            Lexeme lex = { L_BRACKET, c };
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "L_BRACKET: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        std::regex rightBracket("\\]");
+        if (regex_match(c, rightBracket)) {
+            Lexeme lex = { R_BRACKET, c };
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "R_PARENTHESIS: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match colon
+        std::regex colon(":");
+        if (regex_match(c, colon)) {
+            Lexeme lex = { COLON, c};
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "COLON: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match pipe or bar
+        std::regex bar("\\|");
+        if (regex_match(c, bar)) {
             if (current + 1 < max_length) {
                 std::string c_new = c + source[current + 1];
 
-                std::regex double_s("\\|>");
-                if (regex_match(c_new, double_s)) {
-                    Lexeme double_symbol = { SYMBOL, c_new };
-                    lexemes.push_back(double_symbol);
+                std::regex pipe("\\|>");
+                if (regex_match(c_new, pipe)) {
+                    Lexeme lex = { PIPE_OPERATOR, c_new };
+                    lexemes.push_back(lex);
                     current += 2;
-                    std::cout << "SYMBOL: " << c_new << std::endl; // Remove in production
+                    std::cout << "PIPE_OPERATOR: " << c_new << std::endl; // Remove in production
                     continue;
                 }
             }
 
-            Lexeme single_symbol = { SYMBOL, c };
-            lexemes.push_back(single_symbol);
+            Lexeme lex = { BAR, c };
+            lexemes.push_back(lex);
             current++;
-            std::cout << "SYMBOL: " << c << std::endl; // Remove in production
+            std::cout << "BAR: " << c << std::endl; // Remove in production
             continue;
         }
 
-        // Match operators which are always single-length
-        std::regex single_op("[+\\-\\*/=]");
-        if (regex_match(c, single_op)) {
-            Lexeme single_operator = { OPERATOR, c};
-            lexemes.push_back(single_operator);
+        // Match arithmetic operators
+        std::regex plus("\\+");
+        if (regex_match(c, plus)) {
+            Lexeme lex = { ARITHMETIC_OPERATOR, c};
+            lexemes.push_back(lex);
             current++;
-            std::cout << "OPERATOR: " << c << std::endl; // Remove in production
+            std::cout << "ARITHMETIC_OPERATOR: " << c << std::endl; // Remove in production
             continue;
         }
 
-        // Match operators which could be double-length
-        std::regex potential_double_op("[><]");
-        if (regex_match(c, potential_double_op)) {
+        std::regex asterisk("\\*");
+        if (regex_match(c, asterisk)) {
+            Lexeme lex = { ARITHMETIC_OPERATOR, c};
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "ARITHMETIC_OPERATOR: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        std::regex slash("/");
+        if (regex_match(c, slash)) {
+            Lexeme lex = { ARITHMETIC_OPERATOR, c};
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "ARITHMETIC_OPERATOR: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match -> or -
+        std::regex dash("-");
+        if (regex_match(c, dash)) {
             if (current + 1 < max_length) {
                 std::string c_new = c + source[current + 1];
 
-                std::regex double_op("(<=)|(>=)");
-                if (regex_match(c_new, double_op)) {
-                    Lexeme double_operator = { OPERATOR, c_new };
-                    lexemes.push_back(double_operator);
+                std::regex mapping("->");
+                if (regex_match(c_new, mapping)) {
+                    Lexeme lex = { MAPPING_OPERATOR, c_new };
+                    lexemes.push_back(lex);
                     current += 2;
-                    std::cout << "OPERATOR: " << c_new << std::endl; // Remove in production
+                    std::cout << "MAPPING_OPERATOR: " << c_new << std::endl; // Remove in production
                     continue;
                 }
             }
 
-            Lexeme single_operator = { OPERATOR, c };
-            lexemes.push_back(single_operator);
+            Lexeme lex = { ARITHMETIC_OPERATOR, c };
+            lexemes.push_back(lex);
             current++;
-            std::cout << "OPERATOR: " << c << std::endl; // Remove in production
+            std::cout << "ARITHMETIC_OPERATOR: " << c << std::endl; // Remove in production
             continue;
         }
 
-        // Match names with a length of 1+
-        std::regex letter("[a-zA-Z]");
-        if (regex_match(c, letter)) {
+        // Match == or =
+        std::regex equals("=");
+        if (regex_match(c, equals)) {
+            if (current + 1 < max_length) {
+                std::string c_new = c + source[current + 1];
+
+                std::regex equality("==");
+                if (regex_match(c_new, equality)) {
+                    Lexeme lex = { COMPARISON_OPERATOR, c_new };
+                    lexemes.push_back(lex);
+                    current += 2;
+                    std::cout << "COMPARISON_OPERATOR: " << c_new << std::endl; // Remove in production
+                    continue;
+                }
+            }
+
+            Lexeme lex = { ASSIGNMENT_OPERATOR, c };
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "ASSIGNMENT_OPERATOR: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match < or <=
+        std::regex lessThan("<");
+        if (regex_match(c, lessThan)) {
+            if (current + 1 < max_length) {
+                std::string c_new = c + source[current + 1];
+
+                std::regex lessOrEqual("<=");
+                if (regex_match(c_new, lessOrEqual)) {
+                    Lexeme lex = { COMPARISON_OPERATOR, c_new };
+                    lexemes.push_back(lex);
+                    current += 2;
+                    std::cout << "COMPARISON_OPERATOR: " << c_new << std::endl; // Remove in production
+                    continue;
+                }
+            }
+
+            Lexeme lex = { COMPARISON_OPERATOR, c };
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "COMPARISON_OPERATOR: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match > or >=
+        std::regex moreThan(">");
+        if (regex_match(c, moreThan)) {
+            if (current + 1 < max_length) {
+                std::string c_new = c + source[current + 1];
+
+                std::regex moreOrEqual("<=");
+                if (regex_match(c_new, moreOrEqual)) {
+                    Lexeme lex = { COMPARISON_OPERATOR, c_new };
+                    lexemes.push_back(lex);
+                    current += 2;
+                    std::cout << "COMPARISON_OPERATOR: " << c_new << std::endl; // Remove in production
+                    continue;
+                }
+            }
+
+            Lexeme lex = { COMPARISON_OPERATOR, c };
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "COMPARISON_OPERATOR: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match !=
+        std::regex exclamation("!");
+        if (regex_match(c, exclamation)) {
+            if (current + 1 < max_length) {
+                std::string c_new = c + source[current + 1];
+
+                std::regex notEquals("!=");
+                if (regex_match(c_new, notEquals)) {
+                    Lexeme lex = { COMPARISON_OPERATOR, c_new };
+                    lexemes.push_back(lex);
+                    current += 2;
+                    std::cout << "COMPARISON_OPERATOR: " << c_new << std::endl; // Remove in production
+                    continue;
+                }
+            }
+
+            Lexeme lex = { COMPARISON_OPERATOR, c };
+            lexemes.push_back(lex);
+            current++;
+            std::cout << "COMPARISON_OPERATOR: " << c << std::endl; // Remove in production
+            continue;
+        }
+
+        // Match reserved or free identifiers
+        std::regex identifierStartingChar("[_a-zA-Z]");
+        if (regex_match(c, identifierStartingChar)) {
             std::string word;
 
-            std::regex w("\\w");
+            std::regex identifierChar("\\w");
             while (current < max_length) {
                 c = std::string(1, source[current]);
-                if (regex_match(c, w)) {
+                if (regex_match(c, identifierChar)) {
                     word += c;
                     current++;
                 }
                 else {
                     current--;
 
-                    // Check if name is a reserved word
-                    if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
-                        Lexeme keyword = { KEYWORD, word };
-                        lexemes.push_back(keyword);
-                        std::cout << "KEYWORD: " << word << std::endl; // Remove in production
+                    // Check if identifier is a boolean operator
+                    if (BOOLEAN_OPERATORS.find(word) != BOOLEAN_OPERATORS.end()) {
+                        Lexeme lex = { BOOLEAN_OPERATOR, word };
+                        lexemes.push_back(lex);
+                        std::cout << "BOOLEAN_OPERATOR: " << word << std::endl; // Remove in production
                         break;
                     }
 
-                    Lexeme name = { NAME, word };
-                    lexemes.push_back(name);
-                    std::cout << "NAME: " << word << std::endl; // Remove in production
+                    // Check if identifier is a boolean literal
+                    if (BOOLEAN_LITERALS.find(word) != BOOLEAN_LITERALS.end()) {
+                        Lexeme lex = { BOOLEAN_LITERAL, word };
+                        lexemes.push_back(lex);
+                        std::cout << "BOOLEAN_LITERAL: " << word << std::endl; // Remove in production
+                        break;
+                    }
+
+                    // Check if identifier is a prefix operator
+                    if (PREFIX_OPERATORS.find(word) != PREFIX_OPERATORS.end()) {
+                        Lexeme lex = { PREFIX_OPERATOR, word };
+                        lexemes.push_back(lex);
+                        std::cout << "PREFIX_OPERATOR: " << word << std::endl; // Remove in production
+                        break;
+                    }
+
+                    Lexeme lex = { IDENTIFIER, word };
+                    lexemes.push_back(lex);
+                    std::cout << "IDENTIFIER: " << word << std::endl; // Remove in production
                     break;
                 }
             }
@@ -162,32 +319,9 @@ std::vector<Lexeme> tokenize(std::string source) {
                     current++;
                     continue;
                 }
-                Lexeme number = { NUMBER, digits };
-                lexemes.push_back(number);
-                std::cout << "NUMBER: " << digits << std::endl; // Remove in production
-                break;
-            }
-            continue;
-        }
-
-        // Match strings, starting and ending with a double quote
-        std::regex quote("\"");
-        if (regex_match(c, quote) && (current + 1) < max_length) {
-            current++;
-            c = std::string(1, source[current]);
-            std::string chars;
-
-            while (current < max_length) {
-                c = std::string(1, source[current]);
-                if (!regex_match(c, quote)) {
-                    chars += c;
-                    current++;
-                    continue;
-                }
-                Lexeme str = { STRING, chars };
-                lexemes.push_back(str);
-                std::cout << "STRING: " << chars << std::endl; // Remove in production
-                current++;
+                Lexeme lex = { NUMBER_LITERAL, digits };
+                lexemes.push_back(lex);
+                std::cout << "NUMBER_LITERAL: " << digits << std::endl; // Remove in production
                 break;
             }
             continue;
