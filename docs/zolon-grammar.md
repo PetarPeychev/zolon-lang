@@ -16,7 +16,7 @@ expression = LPAREN expression RPAREN
            | IDENTIFIER
            | list
 
-function = IDENTIFIER MAP (expression COLON expression PIPE)* expression .
+function = IDENTIFIER MAP (expression COLON expression BAR)* expression .
 
 infix-operation = expression infix-operator expression .
 
@@ -53,6 +53,7 @@ LPAREN =          \(
 RPAREN =          \)
 MAP =             ->
 COLON =           :
+BAR =             \|
 PIPE =            \|>
 PLUS =            \+
 MINUS =           -
@@ -60,7 +61,7 @@ MULTIPLY =        \*
 DIVIDE =          \/
 LESS =            <
 GREATER =         >
-EQUAL =           =
+EQUAL =           ==
 LESS_EQUAL =      <=
 GREATER_EQUAL =   >=
 NOT_EQUAL =       !=
