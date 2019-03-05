@@ -14,7 +14,7 @@ expression = LPAREN expression RPAREN
            | prefix-operation
            | literal
            | IDENTIFIER
-           | list
+           | list .
 
 function = IDENTIFIER MAP (expression COLON expression PIPE)* expression .
 
