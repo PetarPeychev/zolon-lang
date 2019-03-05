@@ -1,7 +1,7 @@
 # Zolon Grammar Specification
 
 ### Non-Terminal Production Rules
-
+````
 program = binding* main-binding .
 
 binding = IDENTIFIER BIND expression .
@@ -43,9 +43,9 @@ literal = NUMBER | boolean .
 boolean = TRUE | FALSE .
 
 list = LBRACKET (expression COMMA)* expression RBRACKET .
-
+````
 ### Terminal Symbols
-
+````
 IDENTIFIER =      [_a-zA-Z][_0-9a-zA-Z]*
 MAIN =            main
 BIND =            =
@@ -73,3 +73,4 @@ FALSE =           false
 COMMA =           ,
 LBRACKET =        \[
 RBRACKET =        ]
+````
