@@ -1,9 +1,6 @@
 increment = x -> x + 1
 
-increment_twice = x ->
-x
-|> increment
-|> increment
+increment_twice = x -> x |> increment |> increment
 
 increment_five_times = x ->
 x
