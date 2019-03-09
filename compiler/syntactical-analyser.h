@@ -47,33 +47,9 @@ extern int yydebug;
   {
     NUMBER = 258,
     IDENTIFIER = 259,
-    MAIN = 260,
-    LPAREN = 261,
-    RPAREN = 262,
-    TRUE = 263,
-    FALSE = 264,
-    LBRACKET = 265,
-    RBRACKET = 266,
-    IF = 267,
-    COMMA = 268,
-    BIND = 269,
-    COLON = 270,
-    MAP = 271,
-    BAR = 272,
-    PIPE = 273,
-    AND = 274,
-    OR = 275,
-    EQUAL = 276,
-    NOT_EQUAL = 277,
-    LESS = 278,
-    GREATER = 279,
-    LESS_EQUAL = 280,
-    GREATER_EQUAL = 281,
-    PLUS = 282,
-    MINUS = 283,
-    MULTIPLY = 284,
-    DIVIDE = 285,
-    NOT = 286
+    MAP = 260,
+    MAIN = 261,
+    NEG = 262
   };
 #endif
 
@@ -87,7 +63,7 @@ union YYSTYPE
   float fval;
   char *sval;
 
-#line 91 "compiler/syntactical-analyser.h" /* yacc.c:1909  */
+#line 67 "compiler/syntactical-analyser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

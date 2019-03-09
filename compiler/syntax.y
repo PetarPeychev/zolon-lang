@@ -18,113 +18,80 @@
 
 %token <fval> NUMBER
 %token <sval> IDENTIFIER
-%token MAIN LPAREN RPAREN TRUE FALSE LBRACKET RBRACKET IF
-
-%left COMMA
-%left BIND
-%left COLON MAP
-%left BAR
-%left PIPE
-%left AND OR
-%left EQUAL NOT_EQUAL LESS GREATER LESS_EQUAL GREATER_EQUAL
-%left PLUS MINUS
-%left MULTIPLY DIVIDE
-
-%right NOT
+%token MAP "->"
+%token MAIN "main"
+%left '+' '-'
+%left '*' '/'
+%precedence NEG
+%right '^'
 
 %%
 
-program:
-  bindings main-binding { cout << "Detected a Zolon program" << endl; }
+script:
+  main-binding
+  | binding-list main-binding
   ;
 
-bindings:
-  bindings binding
-  | binding
+binding-list:
+  binding
+  | binding-list binding
   ;
 
 binding:
-  IDENTIFIER BIND expression
+  IDENTIFIER '=' function
+  | IDENTIFIER '=' expression
   ;
 
 main-binding:
-  MAIN BIND expression
-  ;
-
-expression:
-  LPAREN expression RPAREN
-  | function
-  | infix-operation
-  | prefix-operation
-  | literal
-  | function-call
-  | list
+  "main" '=' function
+  | "main" '=' expression
   ;
 
 function:
-  IDENTIFIER MAP expression
+  parameter-list "->" expression
   ;
 
-infix-operation:
-  expression infix-operator expression
+parameter-list:
+  parameter
+  | parameter-list parameter
   ;
 
-infix-operator:
-  PIPE
-  | PLUS
-  | MINUS
-  | MULTIPLY
-  | DIVIDE
-  | LESS
-  | GREATER
-  | EQUAL
-  | LESS_EQUAL
-  | GREATER_EQUAL
-  | NOT_EQUAL
-  | AND
-  | OR
+parameter:
+  '$' IDENTIFIER
   ;
 
-prefix-operation:
-  prefix-operator expression
-  ;
-
-prefix-operator:
-  NOT
-  ;
-
-literal:
+expression:
   NUMBER
-  | boolean
+  | IDENTIFIER
+  | function-application
+  | expression '+' expression
+  | expression '-' expression
+  | expression '*' expression
+  | expression '/' expression
+  | '-' expression  %prec NEG
+  | expression '^' expression
+  | '(' expression ')'
   ;
 
-boolean:
-  TRUE
-  | FALSE
+function-application:
+  function '(' expression-list ')'
   ;
 
-function-call:
-  IDENTIFIER IDENTIFIER
-  ;
-
-list:
-  LBRACKET list-items RBRACKET
-  ;
-
-list-items:
+expression-list:
   %empty
-  | non-empty-list-items
-  ;
-
-non-empty-list-items:
-  list-items COMMA expression
   | expression
+  | expression-list ',' expression
   ;
 
 %%
 
-int main(int, char**) {
-  FILE *myfile = fopen("test.zl", "r");
+int main(int argc, char** argv) {
+  if (argc != 2) {
+    cout << "Incorrect number of arguments!" << endl;
+    return -1;
+  }
+
+  FILE *myfile = fopen(argv[1], "r");
 
   if (!myfile) {
     cout << "Failed to open a .zl file!" << endl;
