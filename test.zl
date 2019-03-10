@@ -1,3 +1,7 @@
-increment = $x -> x + 1
+increment = $x ->
+  x + 1
+
 y = 19.5
-main = $x $y -> 5 * x - increment(7 ^ 9) - - y
+
+main = $x $y ->
+  5 * x - increment(7 ^ 9) - - y

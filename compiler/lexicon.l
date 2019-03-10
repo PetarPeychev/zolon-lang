@@ -1,6 +1,6 @@
 %{
   #include <iostream>
-  #include "syntactical-analyser.h"
+  #include "syntactical-analyser.hpp"
   using namespace std;
   extern int yylex();
   int linenum = 1;

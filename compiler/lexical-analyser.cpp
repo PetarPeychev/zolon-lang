@@ -1,6 +1,6 @@
-#line 2 "compiler/lexical-analyser.c"
+#line 2 "compiler/lexical-analyser.cpp"
 
-#line 4 "compiler/lexical-analyser.c"
+#line 4 "compiler/lexical-analyser.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -452,15 +452,15 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "compiler/lexicon.l"
-#line 2 "compiler/lexicon.l"
+#line 1 "compiler/lexicon.lpp"
+#line 2 "compiler/lexicon.lpp"
   #include <iostream>
   #include "syntactical-analyser.h"
   using namespace std;
   extern int yylex();
   int linenum = 1;
-#line 463 "compiler/lexical-analyser.c"
-#line 464 "compiler/lexical-analyser.c"
+#line 463 "compiler/lexical-analyser.cpp"
+#line 464 "compiler/lexical-analyser.cpp"
 
 #define INITIAL 0
 
@@ -677,10 +677,10 @@ YY_DECL
 		}
 
 	{
-#line 11 "compiler/lexicon.l"
+#line 11 "compiler/lexicon.lpp"
 
 
-#line 684 "compiler/lexical-analyser.c"
+#line 684 "compiler/lexical-analyser.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -739,46 +739,46 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 13 "compiler/lexicon.l"
+#line 13 "compiler/lexicon.lpp"
 ;
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 14 "compiler/lexicon.l"
+#line 14 "compiler/lexicon.lpp"
 { ++linenum; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "compiler/lexicon.l"
+#line 15 "compiler/lexicon.lpp"
 { cout << yytext << endl; return MAP; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "compiler/lexicon.l"
+#line 16 "compiler/lexicon.lpp"
 { cout << yytext[0] << endl; return yytext[0]; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "compiler/lexicon.l"
+#line 17 "compiler/lexicon.lpp"
 { cout << yytext << endl; yylval.fval = atof(yytext); return NUMBER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "compiler/lexicon.l"
+#line 18 "compiler/lexicon.lpp"
 { cout << "main" << endl; return MAIN; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "compiler/lexicon.l"
+#line 19 "compiler/lexicon.lpp"
 { cout << yytext << endl; yylval.sval = strdup(yytext); return IDENTIFIER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "compiler/lexicon.l"
+#line 21 "compiler/lexicon.lpp"
 ECHO;
 	YY_BREAK
-#line 782 "compiler/lexical-analyser.c"
+#line 782 "compiler/lexical-analyser.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1783,6 +1783,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 21 "compiler/lexicon.l"
+#line 21 "compiler/lexicon.lpp"
 
 

@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_COMPILER_SYNTACTICAL_ANALYSER_H_INCLUDED
-# define YY_YY_COMPILER_SYNTACTICAL_ANALYSER_H_INCLUDED
+#ifndef YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
+# define YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -58,12 +58,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "compiler/syntax.y" /* yacc.c:1909  */
+#line 14 "compiler/syntax.ypp" /* yacc.c:1909  */
 
   float fval;
   char *sval;
 
-#line 67 "compiler/syntactical-analyser.h" /* yacc.c:1909  */
+#line 67 "compiler/syntactical-analyser.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -76,4 +76,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_COMPILER_SYNTACTICAL_ANALYSER_H_INCLUDED  */
+#endif /* !YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED  */

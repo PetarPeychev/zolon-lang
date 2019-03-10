@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "compiler/syntax.y" /* yacc.c:339  */
+#line 1 "compiler/syntax.ypp" /* yacc.c:339  */
 
   #include <cstdio>
   #include <iostream>
@@ -75,7 +75,7 @@
 
   void yyerror(const char *s);
 
-#line 79 "compiler/syntactical-analyser.c" /* yacc.c:339  */
+#line 79 "compiler/syntactical-analyser.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -94,9 +94,9 @@
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "syntactical-analyser.h".  */
-#ifndef YY_YY_COMPILER_SYNTACTICAL_ANALYSER_H_INCLUDED
-# define YY_YY_COMPILER_SYNTACTICAL_ANALYSER_H_INCLUDED
+   by #include "syntactical-analyser.hpp".  */
+#ifndef YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
+# define YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -123,12 +123,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "compiler/syntax.y" /* yacc.c:355  */
+#line 14 "compiler/syntax.ypp" /* yacc.c:355  */
 
   float fval;
   char *sval;
 
-#line 132 "compiler/syntactical-analyser.c" /* yacc.c:355  */
+#line 132 "compiler/syntactical-analyser.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -141,11 +141,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_COMPILER_SYNTACTICAL_ANALYSER_H_INCLUDED  */
+#endif /* !YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 149 "compiler/syntactical-analyser.c" /* yacc.c:358  */
+#line 149 "compiler/syntactical-analyser.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1241,7 +1241,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1245 "compiler/syntactical-analyser.c" /* yacc.c:1646  */
+#line 1245 "compiler/syntactical-analyser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1469,7 +1469,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 86 "compiler/syntax.y" /* yacc.c:1906  */
+#line 86 "compiler/syntax.ypp" /* yacc.c:1906  */
 
 
 int main(int argc, char** argv) {
