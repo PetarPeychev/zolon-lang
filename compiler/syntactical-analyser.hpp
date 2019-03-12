@@ -49,7 +49,16 @@ extern int yydebug;
     IDENTIFIER = 259,
     MAP = 260,
     MAIN = 261,
-    NEG = 262
+    BTRUE = 262,
+    BFALSE = 263,
+    AND = 264,
+    OR = 265,
+    EQUALS = 266,
+    LEQUALS = 267,
+    GEQUALS = 268,
+    NEQUALS = 269,
+    NOT = 270,
+    NEG = 271
   };
 #endif
 
@@ -63,7 +72,7 @@ union YYSTYPE
   float fval;
   char *sval;
 
-#line 67 "compiler/syntactical-analyser.hpp" /* yacc.c:1909  */
+#line 76 "compiler/syntactical-analyser.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -20,6 +20,11 @@
 %token <sval> IDENTIFIER
 %token MAP "->"
 %token MAIN "main"
+%token BTRUE "True"
+%token BFALSE "False"
+%left '>' '<'
+%left AND OR EQUALS LEQUALS GEQUALS NEQUALS
+%token NOT "not"
 %left '+' '-'
 %left '*' '/'
 %precedence NEG
@@ -38,17 +43,25 @@ binding-list:
   ;
 
 binding:
-  IDENTIFIER '=' function
-  | IDENTIFIER '=' expression
+  IDENTIFIER '=' expression
   ;
 
 main-binding:
-  "main" '=' function
-  | "main" '=' expression
+  "main" '=' expression
   ;
 
 function:
-  parameter-list "->" expression
+  parameter-list "->" '{' function-body '}'
+  ;
+
+function-body:
+  expression
+  | '|' subdomain-list expression
+  ;
+
+subdomain-list:
+  expression ':' expression '|'
+  | subdomain-list expression ':' expression '|'
   ;
 
 parameter-list:
@@ -57,30 +70,46 @@ parameter-list:
   ;
 
 parameter:
-  '$' IDENTIFIER
+  '\\' IDENTIFIER
   ;
 
 expression:
   NUMBER
-  | IDENTIFIER
+  | boolean
+  | function
   | function-application
   | expression '+' expression
   | expression '-' expression
   | expression '*' expression
   | expression '/' expression
+  | expression '>' expression
+  | expression '<' expression
+  | expression AND expression
+  | expression OR expression
+  | expression EQUALS expression
+  | expression GEQUALS expression
+  | expression LEQUALS expression
+  | expression NEQUALS expression
+  | "not" expression %prec NEG
   | '-' expression  %prec NEG
   | expression '^' expression
   | '(' expression ')'
   ;
 
 function-application:
-  function '(' expression-list ')'
+  IDENTIFIER '(' expression-list ')'
+  | IDENTIFIER
   ;
 
 expression-list:
   %empty
   | expression
   | expression-list ',' expression
+  ;
+
+boolean:
+  "True"
+  | "False"
   ;
 
 %%

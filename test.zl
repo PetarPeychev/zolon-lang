@@ -1,7 +1,13 @@
-increment = $x ->
-  x + 1
+increment = \x -> { x + 1 }
 
-y = 19.5
+add_regular = \x -> {\y -> {x + y}}
 
-main = $x $y ->
-  5 * x - increment(7 ^ 9) - - y
+add_sugar = \x \y -> {x + y}
+
+variable = 19.5
+
+main = \x \y -> {
+  | x > 9: 5 * x - increment(variable) - - y
+  | x < 5: x / map(\x -> {x * 5}, 8) + increment(y * 7) + 93
+  | add_sugar(x, y) * add_regular(21, variable)
+}
