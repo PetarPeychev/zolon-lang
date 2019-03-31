@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
-# define YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
+#ifndef YY_YY_INTERPRETER_PARSER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
+# define YY_YY_INTERPRETER_PARSER_SYNTACTICAL_ANALYSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -39,6 +39,13 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 2 "interpreter/parser/syntax.ypp" /* yacc.c:1909  */
+
+  #include "../abstract-syntax-tree/Node.hpp"
+  #include "../abstract-syntax-tree/Import.hpp"
+
+#line 49 "interpreter/parser/syntactical-analyser.hpp" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -46,19 +53,20 @@ extern int yydebug;
   enum yytokentype
   {
     NUMBER = 258,
-    IDENTIFIER = 259,
-    MAP = 260,
-    MAIN = 261,
+    PATH = 259,
+    IDENTIFIER = 260,
+    MAP = 261,
     BTRUE = 262,
     BFALSE = 263,
-    AND = 264,
-    OR = 265,
-    EQUALS = 266,
-    LEQUALS = 267,
-    GEQUALS = 268,
-    NEQUALS = 269,
-    NOT = 270,
-    NEG = 271
+    IMPORT = 264,
+    AND = 265,
+    OR = 266,
+    EQUALS = 267,
+    LEQUALS = 268,
+    GEQUALS = 269,
+    NEQUALS = 270,
+    NOT = 271,
+    NEG = 272
   };
 #endif
 
@@ -67,12 +75,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "compiler/syntax.ypp" /* yacc.c:1909  */
+#line 20 "interpreter/parser/syntax.ypp" /* yacc.c:1909  */
 
   float fval;
   char *sval;
+  AST::Node* nptr;
 
-#line 76 "compiler/syntactical-analyser.hpp" /* yacc.c:1909  */
+#line 85 "interpreter/parser/syntactical-analyser.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -85,4 +94,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_COMPILER_SYNTACTICAL_ANALYSER_HPP_INCLUDED  */
+#endif /* !YY_YY_INTERPRETER_PARSER_SYNTACTICAL_ANALYSER_HPP_INCLUDED  */

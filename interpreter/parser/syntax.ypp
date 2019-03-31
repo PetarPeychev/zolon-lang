@@ -1,7 +1,16 @@
+%code requires
+{
+  #include "../abstract-syntax-tree/Node.hpp"
+  #include "../abstract-syntax-tree/Import.hpp"
+  #include "../abstract-syntax-tree/Path.hpp"
+}
+
 %{
   #include <cstdio>
   #include <iostream>
   using namespace std;
+
+  #define YYSTYPE class ASTNode *
 
   extern int yylex();
   extern int yyparse();
@@ -11,17 +20,13 @@
   void yyerror(const char *s);
 %}
 
-%union {
-  float fval;
-  char *sval;
-}
-
 %token <fval> NUMBER
+%token <sval> PATH
 %token <sval> IDENTIFIER
 %token MAP "->"
-%token MAIN "main"
 %token BTRUE "True"
 %token BFALSE "False"
+%token IMPORT "import"
 %left '>' '<'
 %left AND OR EQUALS LEQUALS GEQUALS NEQUALS
 %token NOT "not"
@@ -30,47 +35,21 @@
 %precedence NEG
 %right '^'
 
+%type <nptr> import
+
 %%
 
-script:
-  main-binding
-  | binding-list main-binding
-  ;
+zolon:
+  import
+  | binding
+  | expression
 
-binding-list:
-  binding
-  | binding-list binding
+import:
+  "import" PATH                                    {}
   ;
 
 binding:
   IDENTIFIER '=' expression
-  ;
-
-main-binding:
-  "main" '=' expression
-  ;
-
-function:
-  parameter-list "->" '{' function-body '}'
-  ;
-
-function-body:
-  expression
-  | '|' subdomain-list expression
-  ;
-
-subdomain-list:
-  expression ':' expression '|'
-  | subdomain-list expression ':' expression '|'
-  ;
-
-parameter-list:
-  parameter
-  | parameter-list parameter
-  ;
-
-parameter:
-  '\\' IDENTIFIER
   ;
 
 expression:
@@ -96,6 +75,34 @@ expression:
   | '(' expression ')'
   ;
 
+boolean:
+  "True"
+  | "False"
+  ;
+
+function:
+  parameter-list "->" '{' function-body '}'
+  ;
+
+function-body:
+  expression
+  | '|' subdomain-list expression
+  ;
+
+subdomain-list:
+  expression ':' expression '|'
+  | subdomain-list expression ':' expression '|'
+  ;
+
+parameter-list:
+  parameter
+  | parameter-list parameter
+  ;
+
+parameter:
+  '\\' IDENTIFIER
+  ;
+
 function-application:
   IDENTIFIER '(' expression-list ')'
   | IDENTIFIER
@@ -107,22 +114,20 @@ expression-list:
   | expression-list ',' expression
   ;
 
-boolean:
-  "True"
-  | "False"
-  ;
-
 %%
 
-int main(int argc, char** argv) {
-  if (argc != 2) {
+int main(int argc, char** argv)
+{
+  if (argc != 2)
+  {
     cout << "Incorrect number of arguments!" << endl;
     return -1;
   }
 
   FILE *myfile = fopen(argv[1], "r");
 
-  if (!myfile) {
+  if (!myfile)
+  {
     cout << "Failed to open a .zl file!" << endl;
     return -1;
   }
@@ -132,7 +137,8 @@ int main(int argc, char** argv) {
   yyparse();
 }
 
-void yyerror(const char *s) {
+void yyerror(const char *s)
+{
   cout << "Parse Error: " << s << " on line " << linenum << endl;
   exit(-1);
 }
