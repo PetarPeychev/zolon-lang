@@ -1,7 +1,9 @@
 /*-------------------------------------------------------
 
 Minimal entry point, which runs either the interactive
-or file interface, depending on the provided arguments.
+interface or file interpreter, depending on the number of
+provided arguments. Validation of the arguments is
+implemented in the file interpreter.
 
 ---------------------------------------------------------*/
 
