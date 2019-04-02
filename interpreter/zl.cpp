@@ -7,7 +7,7 @@ implemented in the file interpreter.
 
 ---------------------------------------------------------*/
 
-#include "cli/FileInterpreter.hpp"
+#include "cli/FileInterface.hpp"
 #include "cli/InteractiveInterface.hpp"
 
 int main(int argc, char* argv[])
@@ -19,8 +19,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-        auto fileInterpreter = new cli::FileInterpreter();
-        fileInterpreter->run(argc, argv);
+        auto fileInterface = new cli::FileInterface();
+        fileInterface->run(argc, argv);
     }
     return 0;
 }

@@ -56,9 +56,3 @@ void cli::InteractiveInterface::initialize()
     }
     while(this->running);
 }
-
-int main()
-{
-    auto interface = new cli::InteractiveInterface();
-    interface->initialize();
-}

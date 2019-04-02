@@ -1,7 +1,7 @@
 /*-------------------------------------------------------
 
 The REPL (read-eval-print loop) interactive interface
-for the Zolon interpreter.
+wrapper for the interpreter.
 
 ---------------------------------------------------------*/
 
