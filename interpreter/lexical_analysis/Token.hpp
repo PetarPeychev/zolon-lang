@@ -16,7 +16,7 @@ enum TokenType
 {
     // Single-character tokens.
     PLUS, ASTERISK, FSLASH, BSLASH, LPAREN, RPAREN,
-    COMMA, CARET, COLON, BAR, LBRACKET, RBRACKET,
+    COMMA, CARET, COLON, BAR, LBRACKET, RBRACKET, SEMICOLON,
 
     // One-or-two-character tokens.
     MINUS, MAP, BIND, EQUALS, LEQUALS, GEQUALS, NEQUALS,

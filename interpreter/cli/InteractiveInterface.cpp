@@ -1,4 +1,5 @@
 #include "InteractiveInterface.hpp"
+#include "../Interpreter.hpp"
 #include <iostream>
 
 cli::InteractiveInterface::InteractiveInterface()
@@ -18,9 +19,11 @@ std::vector<std::string> cli::InteractiveInterface::getStatements()
 
 void cli::InteractiveInterface::initialize()
 {
+    Interpreter* interpreter = new Interpreter();
     std::cout << "Zolon Interactive Interface (Dev 0.1)" << std::endl;
     do
     {
+        interpreter->hadError = false;
         std::cout << ">> ";
         std::string statement;
         bool statementTerminated = false;
@@ -43,8 +46,11 @@ void cli::InteractiveInterface::initialize()
                 }
                 else
                 {
-                    this->addStatement(statement);
-                    // TODO: Pass statement to evaluation stage
+                    interpreter->run(statement);
+                    if(!interpreter->hadError)
+                    {
+                        this->addStatement(statement);
+                    }
                 }
             }
             else

@@ -53,6 +53,7 @@ std::string lexical_analysis::Token::toString()
         case NOT: str += "NOT, "; break;
         case AND: str += "AND, "; break;
         case OR: str += "OR, "; break;
+        case SEMICOLON: str += "SEMICOLON, "; break;
     }
     str += "Line:" + std::to_string(this->line) + ">";
     return str;

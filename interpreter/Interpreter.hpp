@@ -15,6 +15,8 @@ class Interpreter
 private:
 public:
     Interpreter();
+    static bool hadError;
+    static void error(int line, std::string message);
     void run(std::string statement);
 };
 

@@ -18,9 +18,16 @@ class Scanner
 {
 private:
     std::string statement;
+    int start;
+    int current;
+    int line;
+    bool atEnd();
+    std::vector<lexical_analysis::Token*> tokens;
+    void scanToken();
+    char advance();
 public:
     Scanner(std::string statement);
-    std::vector<lexical_analysis::Token> scanTokens();
+    std::vector<lexical_analysis::Token*> scanTokens();
 };
 }
 
