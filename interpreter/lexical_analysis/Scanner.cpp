@@ -102,14 +102,14 @@ void Scanner::scanToken()
 
 void Scanner::scanIdentifier()
 {
-    while(std::isalpha(peek(1)) || peek(1) == '_' || std::isdigit(peek(1)))
+    while(std::isalpha(this->peek(1))
+    || this->peek(1) == '_'
+    || std::isdigit(this->peek(1)))
     {
         this->advance();
     }
-
     std::string identifier = this->statement.substr(
         this->start, this->current - this->start);
-
     if(identifier == "true") this->tokens.push_back(new Token(BTRUE, this->line));
     else if(identifier == "false") this->tokens.push_back(new Token(BFALSE, this->line));
     else if(identifier == "import") this->tokens.push_back(new Token(IMPORT, this->line));
@@ -121,7 +121,20 @@ void Scanner::scanIdentifier()
 
 void Scanner::scanNumber()
 {
-
+    while(std::isdigit(this->peek(1)))
+    {
+        this->advance();
+    }
+    if(this->peek(1) == '.' && std::isdigit(peek(2)))
+    {
+        this->advance();
+        while(std::isdigit(this->peek(1)))
+        {
+            this->advance();
+        }
+    }
+    double number = std::stod(this->statement.substr(this->start, this->current - this->start));
+    this->tokens.push_back(new Token(NUMBER, this->line, number));
 }
 
 bool Scanner::atEnd()
