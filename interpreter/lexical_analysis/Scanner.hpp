@@ -25,6 +25,10 @@ private:
     std::vector<lexical_analysis::Token*> tokens;
     void scanToken();
     char advance();
+    bool match(char);
+    char peek(int);
+    void scanIdentifier();
+    void scanNumber();
 public:
     Scanner(std::string statement);
     std::vector<lexical_analysis::Token*> scanTokens();
