@@ -110,13 +110,13 @@ void Scanner::scanIdentifier()
     std::string identifier = this->statement.substr(
         this->start, this->current - this->start);
 
-    if(identifier == "true") this->tokens.push_back(new Token(BTRUE, this->start));
-    else if(identifier == "false") this->tokens.push_back(new Token(BFALSE, this->start));
-    else if(identifier == "import") this->tokens.push_back(new Token(IMPORT, this->start));
-    else if(identifier == "not") this->tokens.push_back(new Token(NOT, this->start));
-    else if(identifier == "and") this->tokens.push_back(new Token(AND, this->start));
-    else if(identifier == "or") this->tokens.push_back(new Token(OR, this->start));
-    else this->tokens.push_back(new Token(IDENTIFIER, this->start, identifier));
+    if(identifier == "true") this->tokens.push_back(new Token(BTRUE, this->line));
+    else if(identifier == "false") this->tokens.push_back(new Token(BFALSE, this->line));
+    else if(identifier == "import") this->tokens.push_back(new Token(IMPORT, this->line));
+    else if(identifier == "not") this->tokens.push_back(new Token(NOT, this->line));
+    else if(identifier == "and") this->tokens.push_back(new Token(AND, this->line));
+    else if(identifier == "or") this->tokens.push_back(new Token(OR, this->line));
+    else this->tokens.push_back(new Token(IDENTIFIER, this->line, identifier));
 }
 
 void Scanner::scanNumber()
