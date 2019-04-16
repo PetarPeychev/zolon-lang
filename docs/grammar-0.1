@@ -1,0 +1,37 @@
+statement = binding
+          | expression ;
+
+binding = IDENTIFIER BIND expression ;
+
+expression = equality ;
+
+equality = comparison (( EQUALS | NEQUALS ) comparison )* ;
+
+comparison = addition (( LESS | GREATER | LEQUALS | GEQUALS ) addition )* ;
+
+addition = multiplication (( PLUS | MINUS ) multiplication )* ;
+
+multiplication = unary (( ASTERISK | FSLASH ) unary )* ;
+
+unary = ( NOT | MINUS ) unary
+      | primary ;
+
+primary = NUMBER
+        | boolean
+        | function
+        | function-application
+        | LPAREN expression RPAREN;
+
+boolean = BTRUE
+        | BFALSE ;
+
+function = IDENTIFIER
+         | BSLASH IDENTIFIER MAP LBRACKET function-body RBRACKET ;
+
+function-body = expression
+              | BAR subdomain-list expression ;
+
+subdomain-list = expression COLON expression BAR
+               | subdomain-list expression COLON expression BAR ;
+
+function-application = function LPAREN expression RPAREN ;

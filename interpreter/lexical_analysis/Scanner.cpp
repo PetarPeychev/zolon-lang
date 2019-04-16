@@ -112,7 +112,6 @@ void Scanner::scanIdentifier()
         this->start, this->current - this->start);
     if(identifier == "true") this->tokens.push_back(new Token(BTRUE, this->line));
     else if(identifier == "false") this->tokens.push_back(new Token(BFALSE, this->line));
-    else if(identifier == "import") this->tokens.push_back(new Token(IMPORT, this->line));
     else if(identifier == "not") this->tokens.push_back(new Token(NOT, this->line));
     else if(identifier == "and") this->tokens.push_back(new Token(AND, this->line));
     else if(identifier == "or") this->tokens.push_back(new Token(OR, this->line));
