@@ -1,5 +1,0 @@
-main = \x \y -> {
-  | x > 9: 5 * x - increment(variable) - - y
-  | x < 5: x / map(\x -> {x * 5}, 8) + increment(y * 7) + 93
-  | add_sugar(x, y) * add_regular(21, variable)
-}
