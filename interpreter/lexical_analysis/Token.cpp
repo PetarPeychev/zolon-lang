@@ -41,6 +41,8 @@ std::string lexical_analysis::Token::toString()
         case MAP: str += "MAP, "; break;
         case BIND: str += "BIND, "; break;
         case EQUALS: str += "EQUALS, "; break;
+        case LESS: str += "LESS, "; break;
+        case GREATER: str += "GREATER, "; break;
         case LEQUALS: str += "LEQUALS, "; break;
         case GEQUALS: str += "GEQUALS, "; break;
         case NEQUALS: str += "NEQUALS, "; break;
