@@ -8,3 +8,5 @@
 #include "RelationalOperation.hpp"
 #include "Binding.hpp"
 #include "Statement.hpp"
+#include "InvalidExpression.hpp"
+#include "InvalidBinding.hpp"

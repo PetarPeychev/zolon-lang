@@ -1,4 +1,5 @@
 #include "ArithmeticOperation.hpp"
+#include <iostream>
 
 namespace syntax_tree {
 
@@ -8,6 +9,13 @@ ArithmeticOperation::ArithmeticOperation(ArithmeticOperator op, Expression* left
     this->left = left;
     this->right = right;
 }
+
+ArithmeticOperation::ArithmeticOperation(ArithmeticOperator op, Expression* right)
+{
+    this->op = op;
+    this->right = right;
+}
+
 void ArithmeticOperation::print()
 {
     this->left->print();

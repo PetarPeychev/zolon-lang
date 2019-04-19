@@ -40,6 +40,10 @@ public:
     Token(TokenType type, int line, std::string sval);
     Token(TokenType type, int line, double nval);
     std::string toString();
+    TokenType tokenType();
+    double tokenNval();
+    std::string tokenSval();
+    int tokenLine();
 };
 }
 

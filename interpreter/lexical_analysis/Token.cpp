@@ -20,6 +20,40 @@ lexical_analysis::Token::Token(TokenType type, int line, double nval)
     this->nval = nval;
 }
 
+int lexical_analysis::Token::tokenLine()
+{
+    return this->line;
+}
+
+lexical_analysis::TokenType lexical_analysis::Token::tokenType()
+{
+    return this->type;
+}
+
+double lexical_analysis::Token::tokenNval()
+{
+    if(this->type == NUMBER)
+    {
+        return this->nval;
+    }
+    else
+    {
+        throw "Token type does not contain a number value!";
+    }
+}
+
+std::string lexical_analysis::Token::tokenSval()
+{
+    if(this->type == PATH)
+    {
+        return this->sval;
+    }
+    else
+    {
+        throw "Token type does not contain a string value!";
+    }
+}
+
 std::string lexical_analysis::Token::toString()
 {
     std::string str = "<Type:";

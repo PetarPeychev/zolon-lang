@@ -12,6 +12,7 @@ private:
     std::string identifier;
     Expression *expression;
 public:
+    Binding();
     Binding(std::string, Expression*);
     void print();
 };

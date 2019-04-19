@@ -22,6 +22,7 @@ private:
     Expression* right;
 public:
     ArithmeticOperation(ArithmeticOperator op, Expression* left, Expression* right);
+    ArithmeticOperation(ArithmeticOperator op, Expression* right);
     void print();
 };
 }

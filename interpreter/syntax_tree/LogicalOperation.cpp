@@ -1,4 +1,7 @@
 #include "LogicalOperation.hpp"
+#include <iostream>
+
+using namespace syntax_tree;
 
 LogicalOperation::LogicalOperation(LogicalOperator op, Expression* left, Expression* right)
 {
@@ -6,6 +9,13 @@ LogicalOperation::LogicalOperation(LogicalOperator op, Expression* left, Express
     this->left = left;
     this->right = right;
 }
+
+LogicalOperation::LogicalOperation(LogicalOperator op, Expression* right)
+{
+    this->op = op;
+    this->right = right;
+}
+
 void LogicalOperation::print()
 {
     this->left->print();

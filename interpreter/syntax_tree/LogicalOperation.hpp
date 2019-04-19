@@ -20,6 +20,7 @@ private:
     Expression* right;
 public:
     LogicalOperation(LogicalOperator op, Expression* left, Expression* right);
+    LogicalOperation(LogicalOperator op, Expression* right);
     void print();
 };
 }
