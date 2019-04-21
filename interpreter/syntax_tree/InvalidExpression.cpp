@@ -5,5 +5,5 @@ using namespace syntax_tree;
 
 void InvalidExpression::print()
 {
-    std::cout << "[Invalid Binding]";
+    std::cout << "[Invalid Expression]";
 }

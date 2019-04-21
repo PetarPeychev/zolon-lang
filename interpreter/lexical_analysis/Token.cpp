@@ -44,7 +44,7 @@ double lexical_analysis::Token::tokenNval()
 
 std::string lexical_analysis::Token::tokenSval()
 {
-    if(this->type == PATH)
+    if(this->type == PATH || this->type == IDENTIFIER)
     {
         return this->sval;
     }
