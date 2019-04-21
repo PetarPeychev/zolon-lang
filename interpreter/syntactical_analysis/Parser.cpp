@@ -11,6 +11,11 @@ Parser::Parser(std::vector<Token*> tokens)
     this->tokens = tokens;
 }
 
+Statement *Parser::parseStatement()
+{
+    return this->statement();
+}
+
 void Parser::error(std::string message)
 {
     Interpreter::error(this->peek()->tokenLine(), message);

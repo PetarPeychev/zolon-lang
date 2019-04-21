@@ -1,4 +1,5 @@
 #include "RelationalOperation.hpp"
+#include <iostream>
 
 namespace syntax_tree {
 

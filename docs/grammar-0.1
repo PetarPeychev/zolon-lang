@@ -17,13 +17,11 @@ unary = ( NOT | MINUS ) unary
       | primary ;
 
 primary = NUMBER
-        | boolean
+        | BTRUE
+	| BFALSE
         | function
         | function-application
         | LPAREN expression RPAREN;
-
-boolean = BTRUE
-        | BFALSE ;
 
 function = IDENTIFIER
          | BSLASH IDENTIFIER MAP LBRACKET function-body RBRACKET ;

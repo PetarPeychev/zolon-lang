@@ -1,4 +1,5 @@
 #include "FunctionApplication.hpp"
+#include <iostream>
 
 namespace syntax_tree {
 

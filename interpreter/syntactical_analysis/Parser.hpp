@@ -47,7 +47,7 @@ private:
     syntax_tree::Expression *function_application();
 public:
     Parser(std::vector<lexical_analysis::Token*>);
-    syntax_tree::Expression *parse();
+    syntax_tree::Statement *parseStatement();
 };
 }
 
