@@ -1,7 +1,10 @@
 statement = binding
-          | expression ;
+          | import 							// To be added
+          | expression
 
 binding = IDENTIFIER BIND expression ;
+
+import = IMPORT PATH ; 							// To be added
 
 expression = equality ;
 
@@ -19,17 +22,17 @@ unary = ( NOT | MINUS ) unary
 primary = NUMBER
         | BTRUE
 	| BFALSE
-        | function
-        | function-application
+        | function 							// To be added
+        | function-application 						// To be added
         | LPAREN expression RPAREN;
 
-function = IDENTIFIER
-         | BSLASH IDENTIFIER MAP LBRACKET function-body RBRACKET ;
+function = IDENTIFIER 							// To be added
+         | BSLASH IDENTIFIER MAP LBRACKET function-body RBRACKET ; 	// To be added
 
-function-body = expression
-              | BAR subdomain-list expression ;
+function-body = expression 						// To be added 
+              | BAR subdomain-list expression ; 			// To be added
 
-subdomain-list = expression COLON expression BAR
-               | subdomain-list expression COLON expression BAR ;
+subdomain-list = expression COLON expression BAR 			// To be added
+               | subdomain-list expression COLON expression BAR ; 	// To be added
 
-function-application = function LPAREN expression RPAREN ;
+function-application = function LPAREN expression RPAREN ; 		// To be added
