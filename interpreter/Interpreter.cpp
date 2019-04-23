@@ -19,6 +19,12 @@ void Interpreter::error(int line, std::string message)
     hadError = true;
 }
 
+void Interpreter::exception(std::string message)
+{
+    std::cout << "Runtime Exception: " + message << std::endl;
+    hadError = true;
+}
+
 void Interpreter::run(std::string statement)
 {
     lexical_analysis::Scanner *scanner = new lexical_analysis::Scanner(statement);

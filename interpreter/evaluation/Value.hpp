@@ -12,7 +12,7 @@ namespace evaluation {
 
 enum ValueType
 {
-    NUMBER, BOOLEAN
+    NUMBER, BOOLEAN, INVALID
 };
 
 class Value
@@ -22,6 +22,7 @@ private:
     double nval;
     bool bval;
 public:
+    Value();
     Value(ValueType, double);
     Value(ValueType, bool);
     ValueType valueType();

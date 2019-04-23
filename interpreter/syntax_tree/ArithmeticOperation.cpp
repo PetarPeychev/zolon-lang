@@ -1,4 +1,5 @@
 #include "ArithmeticOperation.hpp"
+#include "../Interpreter.hpp"
 #include <iostream>
 
 using namespace syntax_tree;
@@ -39,19 +40,28 @@ void ArithmeticOperation::print()
 
 Value *ArithmeticOperation::evaluate(Environment *environment)
 {
-    Value *lval;
+    Value *lval = NULL;
     if(this->left != NULL)
     {
         lval = this->left->evaluate(environment);
     }
     Value *rval = this->right->evaluate(environment);
-    switch(this->op)
+    if((lval == NULL && rval->valueType() == NUMBER && this->op == ArithmeticNegation)
+    || (lval != NULL && lval->valueType() == NUMBER && rval->valueType() == NUMBER))
     {
-        case Addition: return new Value(NUMBER, lval->valueNval() + rval->valueNval()); break;
-        case Subtraction: return new Value(NUMBER, lval->valueNval() - rval->valueNval()); break;
-        case Multiplication: return new Value(NUMBER, lval->valueNval() * rval->valueNval()); break;
-        case Division: return new Value(NUMBER, lval->valueNval() / rval->valueNval()); break;
-        case ArithmeticNegation: return new Value(NUMBER, -rval->valueNval()); break;
-        default: /* Logically Impossible */ return NULL; break;
+        switch(this->op)
+        {
+            case Addition: return new Value(NUMBER, lval->valueNval() + rval->valueNval()); break;
+            case Subtraction: return new Value(NUMBER, lval->valueNval() - rval->valueNval()); break;
+            case Multiplication: return new Value(NUMBER, lval->valueNval() * rval->valueNval()); break;
+            case Division: return new Value(NUMBER, lval->valueNval() / rval->valueNval()); break;
+            case ArithmeticNegation: return new Value(NUMBER, -rval->valueNval()); break;
+            default: /* Logically Impossible */ return NULL; break;
+        }
+    }
+    else
+    {
+        Interpreter::exception("Arithmetic operation attempted on invalid value types.");
+        return new Value();
     }
 }

@@ -3,6 +3,11 @@
 
 using namespace evaluation;
 
+Value::Value()
+{
+    this->type = INVALID;
+}
+
 Value::Value(ValueType type, double nval)
 {
     this->type = type;
@@ -31,6 +36,10 @@ void Value::print()
         {
             std::cout << "false" << std::endl;
         }
+    }
+    else if(this->type == INVALID)
+    {
+        std::cout << "[Invalid Value]" << std::endl;
     }
 }
 

@@ -1,5 +1,6 @@
 #include "Binding.hpp"
 #include "InvalidExpression.hpp"
+#include "../Interpreter.hpp"
 #include <iostream>
 
 using namespace syntax_tree;
@@ -26,6 +27,13 @@ void Binding::print()
 void Binding::evaluate(Environment *environment)
 {
     Value *rval = this->expression->evaluate(environment);
-    environment->add(this->identifier, rval);
-    rval->print();
+    if(rval->valueType() != INVALID)
+    {
+        environment->add(this->identifier, rval);
+        rval->print();
+    }
+    else
+    {
+        Interpreter::exception("Attempting to bind an invalid value type.");
+    }
 }
