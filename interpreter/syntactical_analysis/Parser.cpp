@@ -5,10 +5,11 @@ using namespace syntactical_analysis;
 using namespace lexical_analysis;
 using namespace syntax_tree;
 
-Parser::Parser(std::vector<Token*> tokens)
+Parser::Parser(std::vector<Token*> tokens, evaluation::Environment *environment)
 {
     this->current = 0;
     this->tokens = tokens;
+    this->environment = environment;
 }
 
 Statement *Parser::parseStatement()
@@ -282,6 +283,23 @@ Expression *Parser::primary()
     else if(this->match(NUMBER))
     {
         return new NumberLiteral(this->previous()->tokenNval());
+    }
+    else if(this->match(IDENTIFIER))
+    {
+        evaluation::Value *value = this->environment->find(this->previous()->tokenSval());
+        if(value->valueType() == evaluation::NUMBER)
+        {
+            return new NumberLiteral(value->valueNval());
+        }
+        else if(value->valueType() == evaluation::BOOLEAN)
+        {
+            return new BooleanLiteral(value->valueBval());
+        }
+        else
+        {
+            this->error("Attempting to call a nonexistent function.");
+            return new InvalidExpression();
+        }
     }
     else if(this->match(LPAREN))
     {

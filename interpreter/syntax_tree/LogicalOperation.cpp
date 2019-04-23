@@ -38,7 +38,7 @@ void LogicalOperation::print()
 
 Value *LogicalOperation::evaluate(Environment *environment)
 {
-    Value *lval;
+    Value *lval = NULL;
     if(this->left != NULL)
     {
         lval = this->left->evaluate(environment);

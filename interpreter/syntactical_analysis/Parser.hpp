@@ -12,6 +12,7 @@ according to the grammar and builds a syntax tree.
 #include <string>
 #include "../lexical_analysis/Token.hpp"
 #include "../syntax_tree/syntax_tree.hpp"
+#include "../evaluation/Environment.hpp"
 
 namespace syntactical_analysis {
 
@@ -20,6 +21,7 @@ class Parser
 private:
     std::vector<lexical_analysis::Token*> tokens;
     int current;
+    evaluation::Environment *environment;
     void error(std::string);
     bool match(std::vector<lexical_analysis::TokenType>);
     bool match(lexical_analysis::TokenType);
@@ -47,7 +49,7 @@ private:
     syntax_tree::Expression *subdomain_list();
     syntax_tree::Expression *function_application();
 public:
-    Parser(std::vector<lexical_analysis::Token*>);
+    Parser(std::vector<lexical_analysis::Token*>, evaluation::Environment *);
     syntax_tree::Statement *parseStatement();
 };
 }

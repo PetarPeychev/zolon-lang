@@ -22,8 +22,10 @@ private:
 public:
     Environment();
     Environment(Environment *);
+    bool check(std::string);
     Value *find(std::string);
     void add(std::string, Value *);
+    void print();
 };
 }
 

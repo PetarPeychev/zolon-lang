@@ -44,6 +44,8 @@ void cli::InteractiveInterface::initialize()
                     std::cout << "Statements:" << std::endl;
                     for (auto i = statements.begin(); i != statements.end(); ++i)
                         std::cout << *i << std::endl;
+                    std::cout << "Environment Variables:" << std::endl;
+                    environment->print();
                     this->running = false;
                 }
                 else

@@ -35,11 +35,12 @@ void Interpreter::run(std::string statement)
     {
         std::cout << token->toString() << std::endl;
     }
-    syntactical_analysis::Parser *parser = new syntactical_analysis::Parser(tokens);
+    syntactical_analysis::Parser *parser =
+        new syntactical_analysis::Parser(tokens, this->environment);
     syntax_tree::Statement *tree = parser->parseStatement();
     if(this->hadError) return; // Return if parser produced an error
     // Print syntax tree for debug purposes
     tree->print();
     std::cout << std::endl;
-    tree->evaluate(this->environment); // TODO: Runtime exception handling
+    tree->evaluate(this->environment);
 }
