@@ -133,7 +133,27 @@ Binding *Parser::binding()
 
 Expression *Parser::expression()
 {
-    return this->equality();
+    return this->logical();
+}
+
+Expression *Parser::logical()
+{
+    Expression *expression = this->equality();
+    std::vector<TokenType> operators = {AND, OR};
+    while(this->match(operators))
+    {
+        Token *op = this->previous();
+        Expression *right = this->equality();
+        LogicalOperator logOp;
+        switch(op->tokenType())
+        {
+            case(AND): logOp = Conjunction; break;
+            case(OR): logOp = Disjunction; break;
+            default: /* Logically Impossible */ break;
+        }
+        expression = new LogicalOperation(logOp, expression, right);
+    }
+    return expression;
 }
 
 Expression *Parser::equality()

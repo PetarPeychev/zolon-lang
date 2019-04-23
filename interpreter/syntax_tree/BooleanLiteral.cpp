@@ -10,8 +10,8 @@ BooleanLiteral::BooleanLiteral(bool value)
 }
 void BooleanLiteral::print()
 {
-    if(value) std::cout << "True" << ' ';
-    else std::cout << "False" << ' ';
+    if(value) std::cout << "True";
+    else std::cout << "False";
 }
 
 Value *BooleanLiteral::evaluate(Environment *environment)

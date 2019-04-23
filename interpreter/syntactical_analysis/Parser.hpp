@@ -34,6 +34,7 @@ private:
     syntax_tree::Statement *statement();
     syntax_tree::Binding *binding();
     syntax_tree::Expression *expression();
+    syntax_tree::Expression *logical();
     syntax_tree::Expression *equality();
     syntax_tree::Expression *comparison();
     syntax_tree::Expression *addition();

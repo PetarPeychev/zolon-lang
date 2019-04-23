@@ -6,7 +6,9 @@ binding = IDENTIFIER BIND expression ;
 
 import = IMPORT PATH ; 							// To be added
 
-expression = equality ;
+expression = logical ;
+
+logical = equality (( AND | OR ) equality )* ;
 
 equality = comparison (( EQUALS | NEQUALS ) comparison )* ;
 
