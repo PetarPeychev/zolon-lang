@@ -27,6 +27,7 @@ public:
     ValueType valueType();
     double valueNval();
     bool valueBval();
+    void print();
 };
 }
 

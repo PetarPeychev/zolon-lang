@@ -24,6 +24,7 @@ private:
 public:
     RelationalOperation(RelationalOperator op, Expression* left, Expression* right);
     void print();
+    evaluation::Value *evaluate(evaluation::Environment *);
 };
 }
 

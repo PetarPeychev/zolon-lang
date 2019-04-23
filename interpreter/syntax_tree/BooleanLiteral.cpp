@@ -1,7 +1,8 @@
 #include "BooleanLiteral.hpp"
 #include <iostream>
 
-namespace syntax_tree {
+using namespace syntax_tree;
+using namespace evaluation;
 
 BooleanLiteral::BooleanLiteral(bool value)
 {
@@ -12,4 +13,8 @@ void BooleanLiteral::print()
     if(value) std::cout << "True" << ' ';
     else std::cout << "False" << ' ';
 }
+
+Value *BooleanLiteral::evaluate(Environment *environment)
+{
+    return new Value(BOOLEAN, this->value);
 }

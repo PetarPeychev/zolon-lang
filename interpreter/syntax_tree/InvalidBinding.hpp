@@ -10,6 +10,7 @@ class InvalidBinding : public Binding
 {
 public:
     void print();
+    void evaluate(evaluation::Environment *);
 };
 }
 

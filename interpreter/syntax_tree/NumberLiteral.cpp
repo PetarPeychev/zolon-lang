@@ -1,7 +1,8 @@
 #include "NumberLiteral.hpp"
 #include <iostream>
 
-namespace syntax_tree {
+using namespace syntax_tree;
+using namespace evaluation;
 
 NumberLiteral::NumberLiteral(double value)
 {
@@ -11,4 +12,8 @@ void NumberLiteral::print()
 {
     std::cout << value;
 }
+
+Value *NumberLiteral::evaluate(Environment *environment)
+{
+    return new Value(NUMBER, this->value);
 }

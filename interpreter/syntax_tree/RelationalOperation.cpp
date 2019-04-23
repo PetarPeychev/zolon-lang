@@ -1,7 +1,8 @@
 #include "RelationalOperation.hpp"
 #include <iostream>
 
-namespace syntax_tree {
+using namespace syntax_tree;
+using namespace evaluation;
 
 RelationalOperation::RelationalOperation(RelationalOperator op, Expression* left, Expression* right)
 {
@@ -11,6 +12,7 @@ RelationalOperation::RelationalOperation(RelationalOperator op, Expression* left
 }
 void RelationalOperation::print()
 {
+    std::cout << "(";
     this->left->print();
     switch(this->op)
     {
@@ -22,5 +24,25 @@ void RelationalOperation::print()
         case LessOrEqual: std::cout << " <= "; break;
     }
     this->right->print();
+    std::cout << ")";
 }
+
+Value *RelationalOperation::evaluate(Environment *environment)
+{
+    Value *lval;
+    if(this->left != NULL)
+    {
+        lval = this->left->evaluate(environment);
+    }
+    Value *rval = this->right->evaluate(environment);
+    switch(this->op)
+    {
+        case Equality: return new Value(BOOLEAN, lval->valueNval() == rval->valueNval()); break;
+        case Inequality: return new Value(BOOLEAN, lval->valueNval() != rval->valueNval()); break;
+        case GreaterThan: return new Value(BOOLEAN, lval->valueNval() > rval->valueNval()); break;
+        case LessThan: return new Value(BOOLEAN, lval->valueNval() < rval->valueNval()); break;
+        case GreaterOrEqual: return new Value(BOOLEAN, lval->valueNval() >= rval->valueNval()); break;
+        case LessOrEqual: return new Value(BOOLEAN, lval->valueNval() <= rval->valueNval()); break;
+        default: /* Logically Impossible */ return NULL; break;
+    }
 }

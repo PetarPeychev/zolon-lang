@@ -9,6 +9,7 @@ class InvalidExpression : public Expression
 {
 public:
     void print();
+    evaluation::Value *evaluate(evaluation::Environment *);
 };
 }
 

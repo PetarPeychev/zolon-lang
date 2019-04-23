@@ -3,9 +3,13 @@
 #include "lexical_analysis/Token.hpp"
 #include "syntactical_analysis/Parser.hpp"
 #include "syntax_tree/syntax_tree.hpp"
+#include "evaluation/Environment.hpp"
 #include <iostream>
 
-Interpreter::Interpreter(){}
+Interpreter::Interpreter(evaluation::Environment *environment)
+{
+    this->environment = environment;
+}
 
 bool Interpreter::hadError = false;
 
@@ -17,7 +21,7 @@ void Interpreter::error(int line, std::string message)
 
 void Interpreter::run(std::string statement)
 {
-    lexical_analysis::Scanner* scanner = new lexical_analysis::Scanner(statement);
+    lexical_analysis::Scanner *scanner = new lexical_analysis::Scanner(statement);
     std::vector<lexical_analysis::Token*> tokens = scanner->scanTokens();
     if(this->hadError) return; // Return if scanner produced an error
     // Print token vector for debug purposes
@@ -31,4 +35,5 @@ void Interpreter::run(std::string statement)
     // Print syntax tree for debug purposes
     tree->print();
     std::cout << std::endl;
+    tree->evaluate(this->environment); // TODO: Runtime exception handling
 }

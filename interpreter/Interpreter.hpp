@@ -9,12 +9,14 @@ pipeline and evaluates statements.
 #define INTERPRETER_H
 
 #include <string>
+#include "evaluation/Environment.hpp"
 
 class Interpreter
 {
 private:
+    evaluation::Environment *environment;
 public:
-    Interpreter();
+    Interpreter(evaluation::Environment *);
     static bool hadError;
     static void error(int line, std::string message);
     void run(std::string statement);

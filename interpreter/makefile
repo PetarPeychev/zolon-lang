@@ -35,20 +35,20 @@ zl-d:
 	Interpreter.cpp \
 	lexical_analysis/Scanner.cpp \
 	lexical_analysis/Token.cpp \
-	syntactical_analysis/Parser.o \
-	syntax_tree/ArithmeticOperation.o \
-	syntax_tree/Binding.o \
-	syntax_tree/BooleanLiteral.o \
-	syntax_tree/Function.o \
-	syntax_tree/FunctionApplication.o \
-	syntax_tree/InvalidBinding.o \
-	syntax_tree/InvalidExpression.o \
-	syntax_tree/LogicalOperation.o \
-	syntax_tree/NumberLiteral.o \
-	syntax_tree/RelationalOperation.o \
-	syntax_tree/Statement.o \
-	evaluation/Value.o \
-	evaluation/Environment.o \
+	syntactical_analysis/Parser.cpp \
+	syntax_tree/ArithmeticOperation.cpp \
+	syntax_tree/Binding.cpp \
+	syntax_tree/BooleanLiteral.cpp \
+	syntax_tree/Function.cpp \
+	syntax_tree/FunctionApplication.cpp \
+	syntax_tree/InvalidBinding.cpp \
+	syntax_tree/InvalidExpression.cpp \
+	syntax_tree/LogicalOperation.cpp \
+	syntax_tree/NumberLiteral.cpp \
+	syntax_tree/RelationalOperation.cpp \
+	syntax_tree/Statement.cpp \
+	evaluation/Value.cpp \
+	evaluation/Environment.cpp \
 	-o zl-d
 	gdb zl-d
 

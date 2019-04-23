@@ -12,6 +12,7 @@ private:
 public:
     BooleanLiteral(bool value);
     void print();
+    evaluation::Value *evaluate(evaluation::Environment *);
 };
 }
 

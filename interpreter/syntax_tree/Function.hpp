@@ -3,6 +3,7 @@
 
 #include "Expression.hpp"
 #include <string>
+#include "../exceptions/NotImplementedException.hpp"
 
 namespace syntax_tree {
 
@@ -14,6 +15,7 @@ private:
 public:
     Function(std::string argument, Expression* value);
     void print();
+    evaluation::Value *evaluate(evaluation::Environment *) { throw exceptions::NotImplementedException(); }
 };
 }
 

@@ -1,5 +1,6 @@
 #include "InteractiveInterface.hpp"
 #include "../Interpreter.hpp"
+#include "../evaluation/Environment.hpp"
 #include <iostream>
 
 cli::InteractiveInterface::InteractiveInterface()
@@ -19,7 +20,8 @@ std::vector<std::string> cli::InteractiveInterface::getStatements()
 
 void cli::InteractiveInterface::initialize()
 {
-    Interpreter* interpreter = new Interpreter();
+    evaluation::Environment *environment = new evaluation::Environment();
+    Interpreter* interpreter = new Interpreter(environment);
     std::cout << "Zolon Interactive Interface (Dev 0.1)" << std::endl;
     do
     {

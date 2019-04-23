@@ -3,6 +3,7 @@
 
 #include "Binding.hpp"
 #include "Expression.hpp"
+#include "../evaluation/Environment.hpp"
 
 namespace syntax_tree {
 
@@ -22,6 +23,7 @@ public:
     Statement(Binding*);
     Statement(Expression*);
     void print();
+    void evaluate(evaluation::Environment *);
 };
 }
 

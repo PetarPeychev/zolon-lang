@@ -2,6 +2,7 @@
 #define SYNTAXTREE_BINDING_H
 
 #include "Expression.hpp"
+#include "../evaluation/Environment.hpp"
 #include <string>
 
 namespace syntax_tree {
@@ -13,8 +14,9 @@ private:
     Expression *expression;
 public:
     Binding();
-    Binding(std::string, Expression*);
+    Binding(std::string, Expression *);
     void print();
+    void evaluate(evaluation::Environment *);
 };
 }
 

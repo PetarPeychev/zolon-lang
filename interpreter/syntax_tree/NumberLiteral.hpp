@@ -12,6 +12,7 @@ private:
 public:
     NumberLiteral(double value);
     void print();
+    evaluation::Value *evaluate(evaluation::Environment *);
 };
 }
 
