@@ -16,8 +16,8 @@ class FileInterface
 {
 private:
 public:
-    FileInterface() { throw exceptions::NotImplementedException(); };
-    void run(int argc, char* argv[]) { throw exceptions::NotImplementedException(); };
+    FileInterface();
+    void run(int argc, char* argv[]);
 };
 }
 

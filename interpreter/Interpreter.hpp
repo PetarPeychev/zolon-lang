@@ -20,7 +20,7 @@ public:
     static bool hadError;
     static void error(int, std::string);
     static void exception(std::string);
-    void run(std::string statement);
+    void run(std::string statement, bool);
 };
 
 #endif

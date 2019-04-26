@@ -1,8 +1,8 @@
 zl : zl.o InteractiveInterface.o Interpreter.o Scanner.o Token.o Parser.o \
 	 ArithmeticOperation.o Binding.o BooleanLiteral.o Function.o \
-     FunctionApplication.o InvalidBinding.o InvalidExpression.o \
+         FunctionApplication.o InvalidBinding.o InvalidExpression.o \
 	 LogicalOperation.o NumberLiteral.o RelationalOperation.o Statement.o \
-	 Value.o Environment.o
+	 Value.o Environment.o FileInterface.o
 	g++ \
 	zl.o \
 	InteractiveInterface.o \
@@ -23,6 +23,7 @@ zl : zl.o InteractiveInterface.o Interpreter.o Scanner.o Token.o Parser.o \
 	Statement.o \
 	Value.o \
 	Environment.o \
+	FileInterface.o \
 	-o zl
 
 	find . -name "*.gch" -type f -delete
@@ -49,6 +50,7 @@ zl-d:
 	syntax_tree/Statement.cpp \
 	evaluation/Value.cpp \
 	evaluation/Environment.cpp \
+	cli/FileInterface.cpp \
 	-o zl-d
 	gdb zl-d
 
@@ -108,3 +110,6 @@ Value.o : evaluation/Value.cpp
 
 Environment.o : evaluation/Environment.cpp
 	g++ -c evaluation/Environment.cpp
+
+FileInterface.o : cli/FileInterface.cpp
+	g++ -c cli/FileInterface.cpp

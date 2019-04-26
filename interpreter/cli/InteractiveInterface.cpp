@@ -22,6 +22,7 @@ void cli::InteractiveInterface::initialize()
 {
     evaluation::Environment *environment = new evaluation::Environment();
     Interpreter* interpreter = new Interpreter(environment);
+    bool debug = false;
     std::cout << "Zolon Interactive Interface (Dev 0.1)" << std::endl;
     do
     {
@@ -39,7 +40,6 @@ void cli::InteractiveInterface::initialize()
                 statementTerminated = true;
                 if(statement == "quit;")
                 {
-                    // TODO: Rewrite the statements display into a save function
                     auto statements = this->getStatements();
                     std::cout << "Statements:" << std::endl;
                     for (auto i = statements.begin(); i != statements.end(); ++i)
@@ -48,9 +48,17 @@ void cli::InteractiveInterface::initialize()
                     environment->print();
                     this->running = false;
                 }
+                else if(statement == "debug;")
+                {
+                    debug = !debug;
+                }
+                else if(statement == "env;")
+                {
+                    environment->print();
+                }
                 else
                 {
-                    interpreter->run(statement);
+                    interpreter->run(statement, debug);
                     if(!interpreter->hadError)
                     {
                         this->addStatement(statement);

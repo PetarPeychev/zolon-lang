@@ -24,11 +24,11 @@ unary = ( NOT | MINUS ) unary
 primary = NUMBER
         | BTRUE
 	| BFALSE
-        | function 							// To be added
-        | function-application 						// To be added
+        | function 							
+        | function-application 						
         | LPAREN expression RPAREN;
 
-function = IDENTIFIER 							
+function = IDENTIFIER 						        
          | BSLASH IDENTIFIER MAP LBRACKET function-body RBRACKET ; 	// To be added
 
 function-body = expression 						// To be added 
@@ -37,4 +37,5 @@ function-body = expression 						// To be added
 subdomain-list = expression COLON expression BAR 			// To be added
                | subdomain-list expression COLON expression BAR ; 	// To be added
 
-function-application = function LPAREN expression RPAREN ; 		// To be added
+function-application = function
+                     | function LPAREN expression RPAREN ; 		// To be added
