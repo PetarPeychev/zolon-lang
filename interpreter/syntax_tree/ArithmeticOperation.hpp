@@ -1,3 +1,15 @@
+/*-------------------------------------------------------
+
+Represents an arithmetic operation over number values
+using one of the arithmetic operators:
+    Addition        ( + )
+    Subtraction     ( - )
+    Multiplication  ( * )
+    Division        ( / )
+    Negation        ( - )
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_ARITHMETICOPERATION_H
 #define SYNTAXTREE_ARITHMETICOPERATION_H
 
@@ -23,6 +35,7 @@ private:
 public:
     ArithmeticOperation(ArithmeticOperator op, Expression* left, Expression* right);
     ArithmeticOperation(ArithmeticOperator op, Expression* right);
+    ~ArithmeticOperation();
     void print();
     evaluation::Value *evaluate(evaluation::Environment *);
 };

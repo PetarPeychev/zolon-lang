@@ -1,3 +1,16 @@
+/*-------------------------------------------------------
+
+Represents a relational operation on numerical values
+using one of the relational operators:
+    Equality        ( == )
+    Inequality      ( != )
+    GreaterThan     ( >  )
+    LessThan        ( <  )
+    GreaterOrEqual  ( >= )
+    LessOrEqual     ( <= )
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_RELATIONALOPERATION_H
 #define SYNTAXTREE_RELATIONALOPERATION_H
 
@@ -23,6 +36,7 @@ private:
     Expression* right;
 public:
     RelationalOperation(RelationalOperator op, Expression* left, Expression* right);
+    ~RelationalOperation();
     void print();
     evaluation::Value *evaluate(evaluation::Environment *);
 };

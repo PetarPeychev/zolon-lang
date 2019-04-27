@@ -12,9 +12,11 @@ been implemented.
 
 namespace exceptions {
 
+// inheriting from the standard logic_error exception
 class NotImplementedException : public std::logic_error
 {
 public:
+    // add a custom message to the base class
     NotImplementedException() : std::logic_error("Function not yet implemented.") { };
 };
 }

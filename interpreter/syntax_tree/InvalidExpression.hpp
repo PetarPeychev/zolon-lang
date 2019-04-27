@@ -1,3 +1,10 @@
+/*-------------------------------------------------------
+
+Represents an expression, which can't evaluate to
+a valid value.
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_INVALIDEXPRESSION_H
 #define SYNTAXTREE_INVALIDEXPRESSION_H
 

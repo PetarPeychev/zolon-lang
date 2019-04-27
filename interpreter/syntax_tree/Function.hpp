@@ -1,3 +1,12 @@
+/*-------------------------------------------------------
+
+Will represent a lambda function definition.
+
+Is not currently implemented and will produce an
+exception if evaluated.
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_FUNCTION_H
 #define SYNTAXTREE_FUNCTION_H
 

@@ -3,6 +3,9 @@
 Class representing a value, which an expression evaluates
 to at runtime.
 
+Currently include Boolean, Number and Invalid, but
+will soon support Function as a first-class value.
+
 ---------------------------------------------------------*/
 
 #ifndef EVALUATION_VALUE_H

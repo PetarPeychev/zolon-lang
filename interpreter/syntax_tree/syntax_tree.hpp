@@ -1,3 +1,9 @@
+/*-------------------------------------------------------
+
+Imports for the syntax tree classes.
+
+---------------------------------------------------------*/
+
 #include "Expression.hpp"
 #include "ArithmeticOperation.hpp"
 #include "BooleanLiteral.hpp"

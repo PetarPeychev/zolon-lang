@@ -1,3 +1,10 @@
+/*-------------------------------------------------------
+
+Represents a binding, which doesn't contain a valid
+expression.
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_INVALIDBINDING_H
 #define SYNTAXTREE_INVALIDBINDING_H
 

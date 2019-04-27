@@ -1,3 +1,10 @@
+/*-------------------------------------------------------
+
+Represents a literal number value, implemented as a
+double-precision floating point. 
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_NUMBERLITERAL_H
 #define SYNTAXTREE_NUMBERLITERAL_H
 

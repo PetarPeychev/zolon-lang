@@ -3,23 +3,27 @@
 
 using namespace evaluation;
 
+// construct an invalid value
 Value::Value()
 {
     this->type = INVALID;
 }
 
+// construct types which contain a number
 Value::Value(ValueType type, double nval)
 {
     this->type = type;
     this->nval = nval;
 }
 
+// construct types which contain a bool
 Value::Value(ValueType type, bool bval)
 {
     this->type = type;
     this->bval = bval;
 }
 
+// display the value
 void Value::print()
 {
     if(this->type == NUMBER)

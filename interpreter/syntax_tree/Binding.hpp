@@ -1,3 +1,10 @@
+/*-------------------------------------------------------
+
+Statement, which represents a binding of a value to
+an identifier in the current environment frame.
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_BINDING_H
 #define SYNTAXTREE_BINDING_H
 
@@ -15,6 +22,7 @@ private:
 public:
     Binding();
     Binding(std::string, Expression *);
+    ~Binding();
     void print();
     void evaluate(evaluation::Environment *);
 };

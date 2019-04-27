@@ -8,6 +8,7 @@ namespace syntax_tree {
 class Expression
 {
 public:
+    virtual ~Expression() {}
     virtual void print() = 0;
     virtual evaluation::Value *evaluate(evaluation::Environment *) = 0;
 };

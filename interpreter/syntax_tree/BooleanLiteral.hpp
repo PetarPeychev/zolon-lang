@@ -1,3 +1,9 @@
+/*-------------------------------------------------------
+
+Represents a literal boolean value of either true or false.
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_BOOLEANLITERAL_H
 #define SYNTAXTREE_BOOLEANLITERAL_H
 

@@ -7,21 +7,32 @@ using namespace syntax_tree;
 
 Parser::Parser(std::vector<Token*> tokens, evaluation::Environment *environment)
 {
+    // counter for the current token, similar to the scanner
     this->current = 0;
+
+    // the token vector
     this->tokens = tokens;
+
+    // a reference to the environment is required for 2 purposes:
+    // 1. To evaluate bindings and function applications.
+    // 2. To handle ambiguities in the grammar during the syntactical analysis pass
     this->environment = environment;
 }
 
+// the first parsing call in the recursive hierarchy
 Statement *Parser::parseStatement()
 {
     return this->statement();
 }
 
+// return an error to the interpreter
 void Parser::error(std::string message)
 {
     Interpreter::error(this->peek()->tokenLine(), message);
 }
 
+// same match logic as the Scanner, but this is an overloaded version,
+// which can match a vector of many token types
 bool Parser::match(std::vector<TokenType> types)
 {
     for(auto type : types)
@@ -35,6 +46,7 @@ bool Parser::match(std::vector<TokenType> types)
     return false;
 }
 
+// same match logic as the Scanner
 bool Parser::match(TokenType type)
 {
     if(this->check(type))
@@ -45,6 +57,7 @@ bool Parser::match(TokenType type)
     return false;
 }
 
+// check serves a similar function to peek(1) in the Scanner
 bool Parser::check(TokenType type)
 {
     if(this->atEnd())
@@ -57,6 +70,7 @@ bool Parser::check(TokenType type)
     }
 }
 
+// similar to the peek(lookahead) from the Scanner
 bool Parser::check(TokenType type, int lookahead)
 {
     if(this->atEnd(lookahead))
@@ -69,6 +83,7 @@ bool Parser::check(TokenType type, int lookahead)
     }
 }
 
+// same logic as advance in the Scanner - consumes a token
 Token *Parser::advance()
 {
     if(!this->atEnd())
@@ -83,26 +98,33 @@ bool Parser::atEnd()
     return this->current >= static_cast<signed>(this->tokens.size());
 }
 
+// check if the end of the token vector is (lookahead - 1) indices after current
 bool Parser::atEnd(int lookahead)
 {
     return this->current + lookahead - 1 >= static_cast<signed>(this->tokens.size());
 }
 
+// peek functions here are unsafe versions of the check functions
 Token *Parser::peek()
 {
     return this->tokens[this->current];
 }
 
+// same as above, with lookahead
 Token *Parser::peek(int lookahead)
 {
     return this->tokens[this->current + lookahead - 1];
 }
 
+// return the token just consumed
 Token *Parser::previous()
 {
     return this->tokens[this->current - 1];
 }
 
+// statements can be either bindings or expressions
+// they can also be imports in the grammar, but that is to be implemented
+// for a more higher-level view of this whole hierarchy, refer to the grammar definition
 Statement *Parser::statement()
 {
     if(this->check(IDENTIFIER) && this->check(BIND, 2))
@@ -115,6 +137,7 @@ Statement *Parser::statement()
     }
 }
 
+// a binding is in the format "IDENTIFIER BIND expression"
 Binding *Parser::binding()
 {
     this->match(IDENTIFIER);
@@ -125,18 +148,25 @@ Binding *Parser::binding()
     }
     else
     {
+        // Logically impossible, as the condition is checked
+        // in the statement function
         this->error("Missing an expected '=' after identifier.");
         return new InvalidBinding();
     }
+
+    // construct and return a binding with a name and a pointer to an expression
     Expression *expr = this->expression();
     return new Binding(name, expr);
 }
 
+// the operator precedences and associativities are encoded as successive
+// levels of recursive parsing calls. For details, refer to the grammar
 Expression *Parser::expression()
 {
     return this->logical();
 }
 
+// logical expressions of the format "expression LOGICAL_OPERATOR expression"
 Expression *Parser::logical()
 {
     Expression *expression = this->equality();
@@ -157,6 +187,7 @@ Expression *Parser::logical()
     return expression;
 }
 
+// equality expressions of the format "expression EQUALITY_OPERATOR expression"
 Expression *Parser::equality()
 {
     Expression *expression = this->comparison();
@@ -177,6 +208,7 @@ Expression *Parser::equality()
     return expression;
 }
 
+// comparison expressions of the format "expression RELATIONAL_OPERATOR expression"
 Expression *Parser::comparison()
 {
     Expression *expression = this->addition();
@@ -199,6 +231,7 @@ Expression *Parser::comparison()
     return expression;
 }
 
+// addition expressions of the format "expression ADDITION_OPERATOR expression"
 Expression *Parser::addition()
 {
     Expression *expression = this->multiplication();
@@ -219,6 +252,7 @@ Expression *Parser::addition()
     return expression;
 }
 
+// multiplication expressions of the format "expression MULTPLICATION_OPERATOR expression"
 Expression *Parser::multiplication()
 {
     Expression *expression = this->unary();
@@ -239,6 +273,7 @@ Expression *Parser::multiplication()
     return expression;
 }
 
+// unary expressions of the format "UNARY_OPERATOR expression"
 Expression *Parser::unary()
 {
     std::vector<TokenType> arithOperators = {MINUS};
@@ -270,8 +305,10 @@ Expression *Parser::unary()
     return this->primary();
 }
 
+// primitive values, which can be used in expressions
 Expression *Parser::primary()
 {
+    // boolean literals
     if(this->match(BTRUE))
     {
         return new BooleanLiteral(true);
@@ -280,13 +317,21 @@ Expression *Parser::primary()
     {
         return new BooleanLiteral(false);
     }
+
+    // numbers
     else if(this->match(NUMBER))
     {
         return new NumberLiteral(this->previous()->tokenNval());
     }
+    // identifiers can either be functions or function calls,
+    // so there needs to be a contextual check to disambiguate the grammar
+    // This is why we need to check the environment to parse.
     else if(this->match(IDENTIFIER))
     {
         evaluation::Value *value = this->environment->find(this->previous()->tokenSval());
+
+        // if the identifier refers to a zero-parameter function,
+        // then we treat it as a function call
         if(value->valueType() == evaluation::NUMBER)
         {
             return new NumberLiteral(value->valueNval());
@@ -295,12 +340,15 @@ Expression *Parser::primary()
         {
             return new BooleanLiteral(value->valueBval());
         }
+        // else, we treat it as a function value or throw an error
         else
         {
+            // This is where the function parsing code would go.
             this->error("Attempting to call a nonexistent function.");
             return new InvalidExpression();
         }
     }
+    // groupings of the format "( expression )"
     else if(this->match(LPAREN))
     {
         Expression *expr = this->expression();
@@ -315,6 +363,7 @@ Expression *Parser::primary()
         }
         return expr;
     }
+    // if all else fails, throw a parsing error and return an invalid expression
     else
     {
         this->error("Unrecognized expression type.");

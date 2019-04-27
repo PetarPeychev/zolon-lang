@@ -13,6 +13,7 @@ void NumberLiteral::print()
     std::cout << value;
 }
 
+// evaluating a literal means just returning the value
 Value *NumberLiteral::evaluate(Environment *environment)
 {
     return new Value(NUMBER, this->value);

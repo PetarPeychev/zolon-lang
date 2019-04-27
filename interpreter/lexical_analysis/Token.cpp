@@ -1,11 +1,13 @@
 #include "Token.hpp"
 
+// constructor for tokens without a literal value
 lexical_analysis::Token::Token(TokenType type, int line)
 {
     this->type = type;
     this->line = line;
 }
 
+// constructor for tokens with a string literal value
 lexical_analysis::Token::Token(TokenType type, int line, std::string sval)
 {
     this->type = type;
@@ -13,6 +15,7 @@ lexical_analysis::Token::Token(TokenType type, int line, std::string sval)
     this->sval = sval;
 }
 
+// constructor for tokens with a number literal value
 lexical_analysis::Token::Token(TokenType type, int line, double nval)
 {
     this->type = type;
@@ -54,9 +57,12 @@ std::string lexical_analysis::Token::tokenSval()
     }
 }
 
+// turn a token into a string in the format: <Type:NUMBER, Nval:5.000000, Line:1>
 std::string lexical_analysis::Token::toString()
 {
     std::string str = "<Type:";
+
+    // add the appropriate token type
     switch(this->type)
     {
         case PLUS: str += "PLUS, "; break;
@@ -80,8 +86,11 @@ std::string lexical_analysis::Token::toString()
         case LEQUALS: str += "LEQUALS, "; break;
         case GEQUALS: str += "GEQUALS, "; break;
         case NEQUALS: str += "NEQUALS, "; break;
+
+        // some tokens need a literal value as well
         case IDENTIFIER: str += "IDENTIFIER, Sval:" + this->sval + ", "; break;
         case NUMBER: str += "NUMBER, Nval:" + std::to_string(this->nval) + ", "; break;
+
         case PATH: str += "PATH, "; break;
         case BTRUE: str += "BTRUE, "; break;
         case BFALSE: str += "BFALSE, "; break;
@@ -91,6 +100,8 @@ std::string lexical_analysis::Token::toString()
         case OR: str += "OR, "; break;
         case SEMICOLON: str += "SEMICOLON, "; break;
     }
+
+    // add the line number and return
     str += "Line:" + std::to_string(this->line) + ">";
     return str;
 }

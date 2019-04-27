@@ -9,6 +9,7 @@ void InvalidBinding::print()
     std::cout << "[Invalid Binding]";
 }
 
+// can't evaluate an invalid binding
 void InvalidBinding::evaluate(Environment *environment)
 {
     throw "Attempt to evaluate an invalid binding.";

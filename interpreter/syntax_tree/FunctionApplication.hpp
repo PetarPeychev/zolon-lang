@@ -1,3 +1,12 @@
+/*-------------------------------------------------------
+
+Will represent application of a function on a parameter.
+
+Is not currently implemented and trying to evaluate
+it will produce an exception.
+
+---------------------------------------------------------*/
+
 #ifndef SYNTAXTREE_FUNCTIONAPPLICATION_H
 #define SYNTAXTREE_FUNCTIONAPPLICATION_H
 
