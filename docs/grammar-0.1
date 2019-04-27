@@ -1,10 +1,10 @@
 statement = binding
-          | import 							// To be added
+          | import 													// To be added
           | expression
 
 binding = IDENTIFIER BIND expression ;
 
-import = IMPORT PATH ; 							// To be added
+import = IMPORT PATH ; 												// To be added
 
 expression = logical ;
 
@@ -31,11 +31,11 @@ primary = NUMBER
 function = IDENTIFIER 						        
          | BSLASH IDENTIFIER MAP LBRACKET function-body RBRACKET ; 	// To be added
 
-function-body = expression 						// To be added 
-              | BAR subdomain-list expression ; 			// To be added
+function-body = expression 											// To be added 
+              | BAR subdomain-list expression ; 					// To be added
 
-subdomain-list = expression COLON expression BAR 			// To be added
+subdomain-list = expression COLON expression BAR 					// To be added
                | subdomain-list expression COLON expression BAR ; 	// To be added
 
 function-application = function
-                     | function LPAREN expression RPAREN ; 		// To be added
+                     | function LPAREN expression RPAREN ; 			// To be added
